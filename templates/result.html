@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediTriage AI | Triage Result</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0a192f;
+            --primary-neon: #00d2ff;
+            --secondary-neon: #3a7bd5;
+            --accent-purple: #9d50bb;
+            --text-bright: #f8fafc;
+            --text-dim: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.03);
+            
+            /* Risk Levels mapped from Python recommendations.color */
+            --red: #ff4d4d;
+            --orange: #ffa500;
+            --green: #00e676;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(to bottom, rgba(10, 25, 47, 0.93), rgba(10, 25, 47, 0.99)),
+                url('https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-attachment: fixed;
+            color: var(--text-bright);
+            display: flex;
+            justify-content: center;
+        }
+
+        .result-card {
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            width: 100%;
+            max-width: 1000px;
+            border-radius: 32px;
+            padding: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        /* --- Header Section --- */
+        .result-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .result-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, var(--primary-neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .confidence-tag {
+            background: rgba(0, 210, 255, 0.1);
+            color: var(--primary-neon);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+        }
+
+        /* Animated Progress Bar */
+        .progress-container {
+            width: 100%;
+            max-width: 300px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            margin: 25px auto;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary-neon), var(--primary-neon));
+            box-shadow: 0 0 15px var(--primary-neon);
+            transition: width 1.5s cubic-bezier(0.1, 0, 0.3, 1);
+        }
+
+        /* --- Risk Badge --- */
+        .risk-badge {
+            display: inline-block;
+            padding: 12px 45px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .risk-badge.red { background: var(--red); color: #000; box-shadow: 0 0 25px rgba(255, 77, 77, 0.4); }
+        .risk-badge.orange { background: var(--orange); color: #000; box-shadow: 0 0 25px rgba(255, 165, 0, 0.4); }
+        .risk-badge.green { background: var(--green); color: #000; box-shadow: 0 0 25px rgba(0, 230, 118, 0.4); }
+
+        /* --- Info Grid --- */
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+        }
+
+        .info-box:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--primary-neon);
+            transform: translateY(-5px);
+        }
+
+        .info-box h4 {
+            margin: 0 0 12px 0;
+            font-size: 0.75rem;
+            color: var(--primary-neon);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .info-box p {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+
+        /* --- Contributing Factors (XAI) --- */
+        .factors {
+            margin-top: 50px;
+            background: rgba(0, 210, 255, 0.05);
+            padding: 40px;
+            border-radius: 24px;
+            border-left: 5px solid var(--primary-neon);
+        }
+
+        .factors h3 {
+            margin: 0 0 20px 0;
+            font-size: 1.3rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .factors ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .factors li {
+            margin-bottom: 12px;
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            font-size: 1rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .factor-name { font-weight: 600; color: var(--text-dim); }
+        .factor-value { font-weight: 800; color: var(--primary-neon); }
+
+        /* --- Footer Buttons --- */
+        .actions {
+            margin-top: 50px;
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 35px;
+            border-radius: 14px;
+            font-weight: 800;
+            text-decoration: none;
+            transition: 0.3s ease;
+            cursor: pointer;
+            font-family: inherit;
+            border: none;
+        }
+
+        .back-btn {
+            background: rgba(255,255,255,0.05);
+            color: var(--text-bright);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .back-btn:hover { background: rgba(255,255,255,0.1); color: white; }
+
+        .download-btn {
+            background: var(--primary-neon);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .download-btn:hover {
+            background: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.5);
+        }
+
+        @media print {
+            body { background: white; color: black; padding: 0; }
+            .result-card { box-shadow: none; border: 1px solid #ccc; background: white; backdrop-filter: none; }
+            .back-btn, .download-btn { display: none; }
+            .info-box { border: 1px solid #eee; }
+        }
+
+        @media(max-width: 768px){
+            .result-grid { grid-template-columns: 1fr; }
+            .result-card { padding: 30px; }
+            .actions { flex-direction: column; }
+            .btn { width: 100%; text-align: center; }
+        }
+        /* ===== AI CHAT ASSISTANT ===== */
+
+        #chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #00d2ff;
+            color: #0a192f;
+            padding: 14px 24px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 800;
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        #chatbox {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 20px;
+            border: 1px solid #00d2ff;
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+            z-index: 9998;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .chat-header {
+            padding: 15px;
+            background: rgba(0,210,255,0.1);
+        }
+
+        .chat-disclaimer {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+
+        #chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .chat-input {
+            padding: 10px;
+            display: flex;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 8px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: white;
+        }
+
+        .chat-input button {
+            background: #00d2ff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .chat-bubble.user {
+            background: #00d2ff;
+            color: #0a192f;
+            margin-left: auto;
+        }
+
+        .chat-bubble.ai {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            margin-right: auto;
+        }
+
+        #mic-btn.listening {
+            background: white;
+            color: #0a192f;
+        }
+        /* Fix dropdown options visibility */
+        select option {
+            color: black;
+            background: white;
+        }
+        /* =========================
+        ✨ BEAUTIFUL CHAT DROPDOWNS
+        ========================= */
+
+        .chat-header select {
+            background: rgba(255, 255, 255, 0.08);
+            color: #00d2ff;
+            border: 1px solid rgba(0, 210, 255, 0.5);
+            border-radius: 10px;
+            padding: 8px 30px 8px 12px;
+            font-weight: 600;
+            font-size: 13px;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            position: relative;
+        }
+
+        /* Hover effect */
+        .chat-header select:hover {
+            border-color: #00d2ff;
+            box-shadow: 0 0 10px rgba(0,210,255,0.4);
+        }
+
+        /* Focus glow */
+        .chat-header select:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(0,210,255,0.7);
+        }
+
+        /* Dropdown options */
+        .chat-header select option {
+            background: #0f172a;
+            color: white;
+        }
+
+        /* Add arrow icon */
+        .chat-header {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="result-card" data-aos="zoom-in" data-aos-duration="800">
+
+    <div class="result-header">
+        <h1>🧠 AI Triage Analysis</h1>
+        <span class="confidence-tag">AI Confidence Score: {{ confidence }}%</span>
+
+        <div class="progress-container">
+            <div class="progress-bar" style="width: {{ confidence }}%;"></div>
+        </div>
+
+        <div class="risk-badge {{ recommendations.color }}">
+            {{ risk_level }} Risk
+        </div>
+    </div>
+
+    <div class="result-grid">
+        <div class="info-box" data-aos="fade-up" data-aos-delay="100">
+            <h4>Target Department</h4>
+            <p>{{ department }}</p>
+        </div>
+
+        <div class="info-box" data-aos="fade-up" data-aos-delay="200">
+            <h4>Clinical Priority</h4>
+            <p>{{ recommendations.priority }}</p>
+        </div>
+
+        <div class="info-box" data-aos="fade-up" data-aos-delay="300">
+            <h4>Recommended Specialist</h4>
+            <p>{{ recommendations.doctor }}</p>
+        </div>
+
+        <div class="info-box" data-aos="fade-up" data-aos-delay="400">
+            <h4>Dietary Guidelines</h4>
+            <p>{{ recommendations.diet }}</p>
+        </div>
+
+        <div class="info-box" data-aos="fade-up" data-aos-delay="500">
+            <h4>Immediate Medication</h4>
+            <p>{{ recommendations.medicine }}</p>
+        </div>
+    </div>
+
+    <div class="factors" data-aos="fade-up" data-aos-delay="600">
+        <h3>🔍 Clinical Contributing Factors (XAI)</h3>
+        <ul>
+            {% for factor in top_factors %}
+            <li>
+                <span class="factor-name">{{ factor.name }}</span>
+                <span class="factor-value">{{ factor.value }}%</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- =============================== -->
+<!-- 🏥 Smart Hospital Recommendations -->
+<!-- =============================== -->
+
+<div style="
+    margin-top: 50px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 20px;
+    padding: 30px;
+    border: 1px solid rgba(0,210,255,0.3);
+">
+
+    <h2 style="color:#00d2ff; margin-bottom:20px;">
+        🚑 Recommended Hospitals Near You
+    </h2>
+
+    <div id="hospital-results">
+        <p style="color:#94a3b8;">Detecting your location and finding best hospitals...</p>
+    </div>
+
+</div>
+    <div class="actions">
+        <a href="/triage" class="btn back-btn">← New Assessment</a>
+        <button onclick="window.print()" class="btn download-btn">
+            <span>📥</span> Download Medical Report
+        </button>
+    </div>
+
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ once: true });
+</script>
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+<button id="chat-toggle">🤖 AI Assistant</button>
+<div id="chatbox" class="hidden">
+
+    <div class="chat-header">
+        <select id="chat-role">
+            <option value="triage">Triage Mode</option>
+            <option value="support">Patient Support</option>
+            <option value="doctor">Doctor Assistant</option>
+        </select>
+
+        <select id="chat-language">
+            <option value="en-US">English</option>
+            <option value="hi-IN">Hindi</option>
+            <option value="te-IN">Telugu</option>
+            <option value="ta-IN">Tamil</option>
+            <option value="kn-IN">Kannada</option>
+        </select>
+    </div>
+
+    <div id="chat-messages"></div>
+
+    <div class="chat-input">
+        <button id="mic-btn">🎤</button>
+        <input type="text" id="chat-input-field" placeholder="Type message..." />
+        <button id="send-btn">Send</button>
+    </div>
+
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const toggleBtn = document.getElementById("chat-toggle");
+    const chatBox = document.getElementById("chatbox");
+    const chatMessages = document.getElementById("chat-messages");
+    const userInput = document.getElementById("chat-input-field");
+    const sendBtn = document.getElementById("send-btn");
+    const micBtn = document.getElementById("mic-btn");
+    const roleSelect = document.getElementById("chat-role");
+    const languageSelect = document.getElementById("chat-language");
+
+    toggleBtn.addEventListener("click", () => {
+        chatBox.classList.toggle("hidden");
+    });
+
+    function sendMessage() {
+        const message = userInput.value.trim();
+        if (!message) return;
+
+        chatMessages.innerHTML += `
+            <div class="chat-bubble user">${message}</div>
+        `;
+
+        userInput.value = "";
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                message: message,
+                role: roleSelect.value,
+                language: languageSelect.value
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            chatMessages.innerHTML += `
+                <div class="chat-bubble ai">${data.reply}</div>
+            `;
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            const speech = new SpeechSynthesisUtterance(data.reply);
+            speech.lang = languageSelect.value;
+            window.speechSynthesis.speak(speech);
+        });
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+
+    userInput.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+            sendMessage();
+        }
+    });
+
+    // 🎤 Voice Recognition
+    if ('webkitSpeechRecognition' in window) {
+
+        const recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        micBtn.addEventListener("click", () => {
+            recognition.lang = languageSelect.value;
+            recognition.start();
+            micBtn.classList.add("listening");
+        });
+
+        recognition.onresult = function(event) {
+            userInput.value = event.results[0][0].transcript;
+            micBtn.classList.remove("listening");
+        };
+
+        recognition.onend = function() {
+            micBtn.classList.remove("listening");
+        };
+
+    } else {
+        micBtn.style.display = "none";
+    }
+
+});
+</script>
+<script>
+function getLocationAndHospitals(department, risk) {
+
+    if (navigator.geolocation) {
+
+        navigator.geolocation.getCurrentPosition(function(position) {
+
+            fetch("/find_hospitals", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                    department: department,
+                    risk_level: risk
+                })
+            })
+            .then(res => res.json())
+            .then(data => displayHospitals(data));
+
+        });
+
+    } else {
+        alert("Geolocation not supported.");
+    }
+}
+</script>
+<div id="hospital-results"></div>
+<script>
+function displayHospitals(hospitals) {
+
+    let container = document.getElementById("hospital-results");
+    container.innerHTML = "";
+
+    hospitals.forEach(h => {
+
+        container.innerHTML += `
+        <div style="
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #00d2ff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+        ">
+            <h3>🏥 ${h.name}</h3>
+            <p>📍 ${h.distance} km away</p>
+            <p>🛏 ICU Beds: ${h.icu_beds}</p>
+            <p>⭐ AI Score: ${h.score}%</p>
+
+            <a target="_blank"
+               href="https://www.google.com/maps/dir/?api=1&destination=${h.lat},${h.lng}"
+               style="
+                    background:#00d2ff;
+                    padding:10px 20px;
+                    border-radius:8px;
+                    text-decoration:none;
+                    color:#0a192f;
+                    font-weight:bold;">
+               🚑 Navigate Now
+            </a>
+        </div>
+        `;
+    });
+}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const department = "{{ department }}";
+    const risk = "{{ risk_level }}";
+
+    getLocationAndHospitals(department, risk);
+
+});
+</script>
+<script>
+
+function getLocationAndHospitals() {
+
+    const department = "{{ department }}";
+    const risk = "{{ risk_level }}";
+
+    if (navigator.geolocation) {
+
+        navigator.geolocation.getCurrentPosition(function(position) {
+
+            fetch("/find_hospitals", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                    department: department,
+                    risk_level: risk
+                })
+            })
+            .then(res => res.json())
+            .then(data => displayHospitals(data))
+            .catch(err => {
+                document.getElementById("hospital-results").innerHTML =
+                    "<p style='color:red;'>Unable to fetch hospitals.</p>";
+            });
+
+        });
+
+    } else {
+        document.getElementById("hospital-results").innerHTML =
+            "<p style='color:red;'>Geolocation not supported.</p>";
+    }
+}
+
+function displayHospitals(hospitals) {
+
+    let container = document.getElementById("hospital-results");
+    container.innerHTML = "";
+
+    if (hospitals.length === 0) {
+        container.innerHTML = "<p style='color:orange;'>No suitable hospitals found.</p>";
+        return;
+    }
+
+    hospitals.forEach(h => {
+
+        container.innerHTML += `
+        <div style="
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #00d2ff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+        ">
+            <h3>🏥 ${h.name}</h3>
+            <p>📍 ${h.distance} km away</p>
+            <p>🛏 ICU Beds: ${h.icu_beds}</p>
+            <p>⭐ AI Score: ${h.score}%</p>
+
+            <a target="_blank"
+               href="https://www.google.com/maps/dir/?api=1&destination=${h.lat},${h.lng}"
+               style="
+                    display:inline-block;
+                    margin-top:10px;
+                    background:#00d2ff;
+                    padding:10px 20px;
+                    border-radius:8px;
+                    text-decoration:none;
+                    color:#0a192f;
+                    font-weight:bold;">
+               🚑 Navigate Now
+            </a>
+        </div>
+        `;
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    getLocationAndHospitals();
+});
+
+</script>
+
+</body>
+</html>

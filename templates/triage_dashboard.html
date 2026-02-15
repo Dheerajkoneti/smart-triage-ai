@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MediTriage AI | Patient Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0a192f;
+            --primary-neon: #00d2ff;
+            --secondary-neon: #3a7bd5;
+            --accent-purple: #9d50bb;
+            --text-bright: #f8fafc;
+            --text-dim: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.03);
+            --high-risk: #ff4d4d;
+            --medium-risk: #ffa500;
+            --low-risk: #00e676;
+        }
+
+        body {
+            margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(to bottom, rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.98)),
+                url('https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover; background-attachment: fixed; background-position: center;
+            color: var(--text-bright); min-height: 100vh;
+        }
+
+        /* --- Updated Navbar with Action Buttons --- */
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.2rem 4%; background: rgba(10, 25, 47, 0.8);
+            backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary-neon); text-decoration: none; text-shadow: 0 0 15px rgba(0, 210, 255, 0.3); }
+
+        .nav-actions { display: flex; gap: 12px; align-items: center; }
+
+        /* Modern Action Buttons */
+        .action-btn {
+            padding: 10px 18px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);
+            color: white; text-decoration: none; font-weight: 700; font-size: 0.85rem;
+            transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;
+        }
+
+        .btn-intake { background: var(--primary-neon); color: var(--bg-dark); border: none; }
+        .btn-intake:hover { background: #fff; box-shadow: 0 0 20px var(--primary-neon); transform: translateY(-2px); }
+
+        .btn-upload { background: rgba(255, 255, 255, 0.05); }
+        .btn-upload:hover { background: rgba(255, 255, 255, 0.15); border-color: var(--primary-neon); transform: translateY(-2px); }
+
+        .btn-analytics { background: linear-gradient(45deg, var(--secondary-neon), var(--accent-purple)); border: none; }
+        .btn-analytics:hover { box-shadow: 0 0 20px rgba(157, 80, 187, 0.5); transform: translateY(-2px); }
+
+        /* --- Filter Bar --- */
+        .filter-container { padding: 30px 6% 10px; display: flex; gap: 15px; flex-wrap: wrap; }
+        .filter-btn { padding: 12px 24px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); background: var(--glass); color: var(--text-bright); cursor: pointer; transition: 0.3s; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .filter-btn span { font-size: 0.85rem; background: rgba(255,255,255,0.15); padding: 2px 10px; border-radius: 8px; color: var(--primary-neon); }
+        .filter-btn:hover, .filter-btn.active { background: var(--secondary-neon); color: white; border-color: var(--primary-neon); }
+        .filter-btn.active.high-f { background: var(--high-risk); }
+        .filter-btn.active.med-f { background: var(--medium-risk); }
+        .filter-btn.active.low-f { background: var(--low-risk); }
+
+        /* --- Dashboard Grid --- */
+        .container { padding: 20px 6% 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .card { background: var(--glass); backdrop-filter: blur(20px); border-radius: 24px; padding: 25px; border: 1px solid rgba(255, 255, 255, 0.05); transition: 0.4s; position: relative; }
+        .card:hover { transform: translateY(-10px); border-color: var(--primary-neon); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+        .card-top { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .avatar { width: 52px; height: 52px; background: rgba(0, 210, 255, 0.1); border: 1px solid var(--primary-neon); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary-neon); font-size: 1.2rem; }
+        .patient-id { font-size: 0.8rem; font-family: monospace; color: var(--primary-neon); font-weight: 700; }
+        .vitals { font-size: 0.9rem; background: rgba(0, 0, 0, 0.2); padding: 15px; border-radius: 12px; margin-bottom: 15px; }
+        .badge { display: inline-block; padding: 6px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; }
+        .high { background: rgba(255, 77, 77, 0.15); color: var(--high-risk); border: 1px solid var(--high-risk); }
+        .medium { background: rgba(245, 158, 11, 0.15); color: var(--medium-risk); border: 1px solid var(--medium-risk); }
+        .low { background: rgba(16, 185, 129, 0.15); color: var(--low-risk); border: 1px solid var(--low-risk); }
+        .details-btn { margin-top: 15px; display: block; width: 100%; text-align: center; padding: 12px; background: var(--low-risk); color: var(--bg-dark); border-radius: 14px; font-weight: 800; cursor: pointer; transition: 0.3s; border: none; }
+        .details-btn:hover { background: #fff; box-shadow: 0 0 20px var(--low-risk); }
+
+        /* --- Modal Styling --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); display: none; justify-content: center; align-items: center; z-index: 2000; }
+        .modal-card { background: #0f172a; width: 90%; max-width: 550px; padding: 40px; border-radius: 30px; border: 1px solid var(--primary-neon); box-shadow: 0 0 50px rgba(0, 210, 255, 0.25); }
+        .modal-header { color: var(--primary-neon); font-size: 1.5rem; font-weight: 800; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        .confidence { color: #fff; background: var(--secondary-neon); display: inline-block; padding: 6px 16px; border-radius: 10px; font-size: 0.9rem; margin-bottom: 15px; font-weight: 700; }
+        .factors-list { list-style: none; padding: 0; margin-bottom: 25px; }
+        .factors-list li { margin-bottom: 10px; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; }
+        .factors-list li::before { content: '✔'; color: var(--primary-neon); font-weight: bold; }
+        .ai-analysis { background: rgba(0, 210, 255, 0.05); padding: 20px; border-radius: 16px; font-size: 0.95rem; line-height: 1.7; border-left: 4px solid var(--primary-neon); }
+        .close-modal { margin-top: 25px; display: block; text-align: right; color: var(--text-dim); cursor: pointer; font-weight: 700; }
+        /* ===== AI CHAT ASSISTANT ===== */
+
+        #chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #00d2ff;
+            color: #0a192f;
+            padding: 14px 24px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 800;
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        #chatbox {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 20px;
+            border: 1px solid #00d2ff;
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+            z-index: 9998;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .chat-header {
+            padding: 15px;
+            background: rgba(0,210,255,0.1);
+        }
+
+        .chat-disclaimer {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+
+        #chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .chat-input {
+            padding: 10px;
+            display: flex;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 8px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: white;
+        }
+
+        .chat-input button {
+            background: #00d2ff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .chat-bubble.user {
+            background: #00d2ff;
+            color: #0a192f;
+            margin-left: auto;
+        }
+
+        .chat-bubble.ai {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            margin-right: auto;
+        }
+
+        #mic-btn.listening {
+            background: white;
+            color: #0a192f;
+        }
+        /* Fix dropdown options visibility */
+        select option {
+            color: black;
+            background: white;
+        }
+        /* =========================
+        ✨ BEAUTIFUL CHAT DROPDOWNS
+        ========================= */
+
+        .chat-header select {
+            background: rgba(255, 255, 255, 0.08);
+            color: #00d2ff;
+            border: 1px solid rgba(0, 210, 255, 0.5);
+            border-radius: 10px;
+            padding: 8px 30px 8px 12px;
+            font-weight: 600;
+            font-size: 13px;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            position: relative;
+        }
+
+        /* Hover effect */
+        .chat-header select:hover {
+            border-color: #00d2ff;
+            box-shadow: 0 0 10px rgba(0,210,255,0.4);
+        }
+
+        /* Focus glow */
+        .chat-header select:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(0,210,255,0.7);
+        }
+
+        /* Dropdown options */
+        .chat-header select option {
+            background: #0f172a;
+            color: white;
+        }
+
+        /* Add arrow icon */
+        .chat-header {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="/" class="logo">🩺 MediTriage AI</a>
+    
+    <div class="nav-actions">
+        <a href="/triage" class="action-btn btn-intake">➕ New Intake</a>
+        <a href="/upload" class="action-btn btn-upload">📁 Upload Doc</a>
+        <a href="/analytics" class="action-btn btn-analytics">📊 Analytics</a>
+    </div>
+</nav>
+<div class="filter-container">
+    <button class="filter-btn active" onclick="filterPatients('all', this)">All <span id="count-all">0</span></button>
+    <button class="filter-btn high-f" onclick="filterPatients('High', this)">High Risk <span id="count-high">0</span></button>
+    <button class="filter-btn med-f" onclick="filterPatients('Medium', this)">Medium Risk <span id="count-med">0</span></button>
+    <button class="filter-btn low-f" onclick="filterPatients('Low', this)">Low Risk <span id="count-low">0</span></button>
+    <div style="display:flex; gap:10px;">
+        <input 
+            type="text"
+            id="patientSearchInput"
+            placeholder="Search Patient ID (P003)"
+            style="
+                padding:10px 14px;
+                border-radius:12px;
+                border:1px solid rgba(0,210,255,0.4);
+                background: rgba(255,255,255,0.05);
+                color:white;
+                outline:none;
+                width:220px;
+            "
+        />
+        <button onclick="searchPatient()"
+            style="
+                padding:10px 18px;
+                border-radius:12px;
+                background:var(--primary-neon);
+                color:var(--bg-dark);
+                border:none;
+                font-weight:800;
+                cursor:pointer;
+            ">
+            Search
+        </button>
+    </div>
+
+</div>
+
+<div id="patientStatusResult" style="padding: 0 6%; margin-bottom:20px;"></div>
+</div>
+
+<div class="container" id="patient-grid">
+    {% for patient in patients %}
+    <div class="card patient-item" data-risk="{{ patient['Risk_Level'] }}" data-aos="fade-up">
+        <div class="card-top">
+            <div class="avatar">{{ patient['Gender'][0] if patient['Gender'] else 'P' }}</div>
+            <div>
+                <div class="name">Patient {{ loop.index }}</div>
+                <span class="patient-id">ID: {{ patient['Patient_ID'] }}</span>
+            </div>
+        </div>
+
+        <div class="vitals">
+            <strong style="color: var(--primary-neon);">⚡ LIVE VITALS</strong>
+            BP: {{ patient['BP'] }} mmHg | HR: {{ patient['HR'] }} bpm<br>
+            Temp: {{ patient['Temperature'] }}°C
+        </div>
+
+        <div class="badge {{ patient['Risk_Level']|lower }}">{{ patient['Risk_Level'] }} Risk</div>
+        <div class="department" style="color: var(--text-dim); font-size: 0.85rem; font-weight: 600;">📍 {{ patient['Department'] }}</div>
+
+        <button class="details-btn" onclick="showTriageDetails('{{ patient['Patient_ID'] }}', '{{ patient['Risk_Level'] }}', '{{ patient['BP'] }}', '{{ patient['Department'] }}', '{{ patient['Symptoms'] }}')">View Triage Report</button>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="modal-overlay" id="triageModal" onclick="if(event.target == this) closeModal()">
+    <div class="modal-card" data-aos="zoom-in">
+        <div class="modal-header">Triage Details</div>
+        <div class="confidence">AI Confidence Score: 95%</div>
+        <div style="font-size: 1rem; margin-bottom: 12px; font-weight: 800; color: var(--primary-neon);">Key Clinical Factors:</div>
+        <ul class="factors-list" id="factors"></ul>
+        <div class="ai-analysis" id="ai-text"></div>
+        <span class="close-modal" onclick="closeModal()">Close Report</span>
+    </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init();
+
+    function updateCounts() {
+        document.getElementById('count-all').innerText = document.querySelectorAll('.patient-item').length;
+        document.getElementById('count-high').innerText = document.querySelectorAll('.patient-item[data-risk="High"]').length;
+        document.getElementById('count-med').innerText = document.querySelectorAll('.patient-item[data-risk="Medium"]').length;
+        document.getElementById('count-low').innerText = document.querySelectorAll('.patient-item[data-risk="Low"]').length;
+    }
+
+    function filterPatients(risk, btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.patient-item').forEach(card => {
+            card.style.display = (risk === 'all' || card.getAttribute('data-risk') === risk) ? 'block' : 'none';
+        });
+    }
+
+    function showTriageDetails(id, risk, bp, dept, symptoms) {
+        document.getElementById('factors').innerHTML = `
+            <li>Patient ID: <b>${id}</b></li>
+            <li>Observed Vitals: <b>${bp} BP</b></li>
+            <li>Symptoms: <b>${symptoms || 'None reported'}</b></li>
+        `;
+        document.getElementById('ai-text').innerHTML = `<b>AI Analysis:</b> Case prioritized as <span style="color:var(--high-risk)">${risk} Risk</span> for <b>${dept}</b>.`;
+        document.getElementById('triageModal').style.display = 'flex';
+    }
+
+    function closeModal() { document.getElementById('triageModal').style.display = 'none'; }
+    window.onload = updateCounts;
+</script>
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+<button id="chat-toggle">🤖 AI Assistant</button>
+
+<div id="chatbox" class="hidden">
+
+    <div class="chat-header">
+        <select id="chat-role">
+            <option value="triage">Triage Mode</option>
+            <option value="support">Patient Support</option>
+            <option value="doctor">Doctor Assistant</option>
+        </select>
+
+        <select id="chat-language">
+            <option value="en-US">English</option>
+            <option value="hi-IN">Hindi</option>
+            <option value="te-IN">Telugu</option>
+            <option value="ta-IN">Tamil</option>
+            <option value="kn-IN">Kannada</option>
+        </select>
+    </div>
+
+    <div id="chat-messages"></div>
+
+    <div class="chat-input">
+        <button id="mic-btn">🎤</button>
+        <input type="text" id="chat-input-field" placeholder="Type message..." />
+        <button id="send-btn">Send</button>
+    </div>
+
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const toggleBtn = document.getElementById("chat-toggle");
+    const chatBox = document.getElementById("chatbox");
+    const chatMessages = document.getElementById("chat-messages");
+    const userInput = document.getElementById("chat-input-field");
+    const sendBtn = document.getElementById("send-btn");
+    const micBtn = document.getElementById("mic-btn");
+    const roleSelect = document.getElementById("chat-role");
+    const languageSelect = document.getElementById("chat-language");
+
+    toggleBtn.addEventListener("click", () => {
+        chatBox.classList.toggle("hidden");
+    });
+
+    function sendMessage() {
+        const message = userInput.value.trim();
+        if (!message) return;
+
+        chatMessages.innerHTML += `
+            <div class="chat-bubble user">${message}</div>
+        `;
+
+        userInput.value = "";
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                message: message,
+                role: roleSelect.value,
+                language: languageSelect.value
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            chatMessages.innerHTML += `
+                <div class="chat-bubble ai">${data.reply}</div>
+            `;
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            const speech = new SpeechSynthesisUtterance(data.reply);
+            speech.lang = languageSelect.value;
+            window.speechSynthesis.speak(speech);
+        });
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+
+    userInput.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+            sendMessage();
+        }
+    });
+
+    // 🎤 Voice Recognition
+    if ('webkitSpeechRecognition' in window) {
+
+        const recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        micBtn.addEventListener("click", () => {
+            recognition.lang = languageSelect.value;
+            recognition.start();
+            micBtn.classList.add("listening");
+        });
+
+        recognition.onresult = function(event) {
+            userInput.value = event.results[0][0].transcript;
+            micBtn.classList.remove("listening");
+        };
+
+        recognition.onend = function() {
+            micBtn.classList.remove("listening");
+        };
+
+    } else {
+        micBtn.style.display = "none";
+    }
+
+});
+</script>
+<script>
+function searchPatient() {
+    let pid = document.getElementById("patientSearchInput").value.trim();
+
+    if (!pid) {
+        alert("Enter Patient ID");
+        return;
+    }
+
+    fetch("/patient_status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ patient_id: pid })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if (data.error) {
+            document.getElementById("patientStatusResult").innerHTML =
+                `<p style="color:red;">Patient not found</p>`;
+            return;
+        }
+
+        document.getElementById("patientStatusResult").innerHTML = `
+    <div style="background:#0f1c2e; padding:20px; border-radius:16px; margin-bottom:20px;">
+        <h3>Patient ${data.patient_id}</h3>
+        <p><b>Risk:</b> ${data.risk}</p>
+        <p><b>Department:</b> ${data.department}</p>
+
+        ${
+            data.redirect
+            ? `<p style="color:#ff4d4d;"><b>Primary Hospital Full ❌</b></p>
+               <p style="color:#00e676;"><b>Redirecting to ${data.hospital} ✔</b></p>
+               <p>Distance: ${data.distance || "-"} km</p>`
+            : `<p style="color:#00e676;"><b>Assigned Hospital:</b> ${data.hospital}</p>`
+        }
+
+        <p><b>Bed Status:</b> ${data.bed_status}</p>
+
+        ${
+            data.hospital !== "None Available"
+            ? `<a href="https://www.google.com/maps/dir/?api=1&destination=${data.hospital}"
+                 target="_blank"
+                 style="display:inline-block;margin-top:10px;
+                        padding:8px 14px;
+                        background:#00d2ff;
+                        color:#0a192f;
+                        border-radius:8px;
+                        text-decoration:none;
+                        font-weight:700;">
+                🗺 Navigate
+               </a>`
+            : ""
+        }
+    </div>
+`;
+
+    });
+}
+</script>
+</body>
+</html>

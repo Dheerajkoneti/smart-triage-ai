@@ -1,0 +1,24 @@
+<nav class="navbar">
+    <div class="logo">
+        MediTriage AI
+    </div>
+
+    <div class="nav-links">
+
+        {% if session.get("user") %}
+            <div class="profile-dropdown">
+                <button class="profile-btn">
+                    👤 {{ session.get("name") }}
+                </button>
+                <div class="dropdown-content">
+                    <a href="#">Role: {{ session.get("role") }}</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        {% else %}
+            <a href="/login">Login</a>
+            <a href="/register">Sign Up</a>
+        {% endif %}
+
+    </div>
+</nav>

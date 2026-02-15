@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Triage Report</title>
+</head>
+<body style="background:#0a192f; color:white; font-family:sans-serif; padding:40px;">
+
+<h2>Triage Report</h2>
+
+<p><strong>Case ID:</strong> {{ report.patient_id }}</p>
+<p><strong>Risk Level:</strong> {{ report.risk_level }}</p>
+<p><strong>Department:</strong> {{ report.department }}</p>
+<p><strong>Symptoms:</strong> {{ report.symptoms }}</p>
+<p><strong>Blood Pressure:</strong> {{ report.bp }}</p>
+<p><strong>Heart Rate:</strong> {{ report.hr }}</p>
+<p><strong>Temperature:</strong> {{ report.temp }}°C</p>
+
+<br>
+<a href="/patient_dashboard" style="color:#00d2ff;">⬅ Back to Dashboard</a>
+
+</body>
+</html>

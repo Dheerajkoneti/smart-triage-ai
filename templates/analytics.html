@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MediTriage AI | Intelligence Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --bg-dark: #0a192f;
+            --primary-neon: #00d2ff;
+            --secondary-neon: #3a7bd5;
+            --accent-purple: #9d50bb;
+            --text-bright: #f8fafc;
+            --text-dim: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.04);
+            --high: #ff4d4d;
+            --medium: #ffa500;
+            --low: #00e676;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(to bottom, rgba(10, 25, 47, 0.93), rgba(10, 25, 47, 0.99)),
+                url('https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover; background-attachment: fixed;
+            color: var(--text-bright); min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.2rem 6%; background: rgba(10, 25, 47, 0.8);
+            backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary-neon); text-decoration: none; text-shadow: 0 0 15px rgba(0, 210, 255, 0.5); }
+
+        .back-btn {
+            padding: 0.8rem 1.5rem; border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05); color: white;
+            text-decoration: none; font-weight: 700; transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--primary-neon); }
+
+        .container { padding: 40px 6% 80px; }
+
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px; margin-bottom: 50px;
+        }
+
+        .stat-card {
+            background: var(--glass); backdrop-filter: blur(25px);
+            padding: 35px; border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: 0.4s; position: relative;
+        }
+
+        .stat-card:hover { transform: translateY(-10px); border-color: var(--primary-neon); }
+
+        .stat-card h3 { margin: 0; font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 2px; }
+
+        .number { font-size: 3.2rem; font-weight: 800; margin-top: 15px; display: block; }
+
+        /* Neon Glows */
+        .total .number { color: var(--primary-neon); text-shadow: 0 0 20px rgba(0, 210, 255, 0.6); }
+        .high .number { color: var(--high); text-shadow: 0 0 20px rgba(255, 77, 77, 0.6); }
+        .medium .number { color: var(--medium); text-shadow: 0 0 20px rgba(255, 165, 0, 0.6); }
+        .low .number { color: var(--low); text-shadow: 0 0 20px rgba(0, 230, 118, 0.6); }
+
+        .charts-section {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .chart-wrapper {
+            background: var(--glass); backdrop-filter: blur(25px);
+            padding: 30px; border-radius: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            height: 400px; display: flex; flex-direction: column;
+        }
+
+        h2 { font-size: 1.2rem; margin-bottom: 25px; font-weight: 700; color: var(--text-bright); text-align: center; }
+        .chart-inner { flex: 1; position: relative; width: 100%; height: 100%; }
+
+        @media(max-width: 768px) {
+            .charts-section { grid-template-columns: 1fr; }
+            .container { padding: 30px 5%; }
+        }
+        /* ===== AI CHAT ASSISTANT ===== */
+
+        #chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #00d2ff;
+            color: #0a192f;
+            padding: 14px 24px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 800;
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        #chatbox {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 20px;
+            border: 1px solid #00d2ff;
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+            z-index: 9998;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .chat-header {
+            padding: 15px;
+            background: rgba(0,210,255,0.1);
+        }
+
+        .chat-disclaimer {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+
+        #chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .chat-input {
+            padding: 10px;
+            display: flex;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 8px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: white;
+        }
+
+        .chat-input button {
+            background: #00d2ff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .chat-bubble.user {
+            background: #00d2ff;
+            color: #0a192f;
+            margin-left: auto;
+        }
+
+        .chat-bubble.ai {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            margin-right: auto;
+        }
+
+        #mic-btn.listening {
+            background: white;
+            color: #0a192f;
+        }
+        /* Fix dropdown options visibility */
+        select option {
+            color: black;
+            background: white;
+        }
+        /* =========================
+        ✨ BEAUTIFUL CHAT DROPDOWNS
+        ========================= */
+
+        .chat-header select {
+            background: rgba(255, 255, 255, 0.08);
+            color: #00d2ff;
+            border: 1px solid rgba(0, 210, 255, 0.5);
+            border-radius: 10px;
+            padding: 8px 30px 8px 12px;
+            font-weight: 600;
+            font-size: 13px;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            position: relative;
+        }
+
+        /* Hover effect */
+        .chat-header select:hover {
+            border-color: #00d2ff;
+            box-shadow: 0 0 10px rgba(0,210,255,0.4);
+        }
+
+        /* Focus glow */
+        .chat-header select:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(0,210,255,0.7);
+        }
+
+        /* Dropdown options */
+        .chat-header select option {
+            background: #0f172a;
+            color: white;
+        }
+
+        /* Add arrow icon */
+        .chat-header {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="/" class="logo">🩺 MediTriage AI</a>
+    <a href="/dashboard" class="back-btn">← Back to Dashboard</a>
+</nav>
+
+<div class="container">
+    <div class="dashboard-header" data-aos="fade-right">
+        <h1 style="font-size: 2.5rem; margin: 0 0 10px 0;">Intelligence Dashboard</h1>
+        <p style="color: var(--text-dim); font-size: 1.1rem;">Visualizing hospital load and AI-driven risk stratification.</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card total" data-aos="zoom-in" data-aos-delay="100">
+            <h3>Active Patients</h3>
+            <span class="number counter">{{ risk_counts.values()|sum }}</span>
+        </div>
+        <div class="stat-card high" data-aos="zoom-in" data-aos-delay="200">
+            <h3>Critical Risk</h3>
+            <span class="number counter">{{ risk_counts.get('High', 0) }}</span>
+        </div>
+        <div class="stat-card medium" data-aos="zoom-in" data-aos-delay="300">
+            <h3>Urgent Care</h3>
+            <span class="number counter">{{ risk_counts.get('Medium', 0) }}</span>
+        </div>
+        <div class="stat-card low" data-aos="zoom-in" data-aos-delay="400">
+            <h3>Stable Case</h3>
+            <span class="number counter">{{ risk_counts.get('Low', 0) }}</span>
+        </div>
+    </div>
+    <div class="charts-section">
+        <div class="chart-wrapper" data-aos="fade-up">
+            <h2>Distribution Intensity</h2>
+            <div class="chart-inner">
+                <canvas id="riskChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-wrapper" data-aos="fade-up" data-aos-delay="200">
+            <h2>Comparative Risk Load</h2>
+            <div class="chart-inner">
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ once: true, duration: 1000 });
+
+    const riskCounts = {
+        high: {{ risk_counts.get('High', 0) }},
+        medium: {{ risk_counts.get('Medium', 0) }},
+        low: {{ risk_counts.get('Low', 0) }}
+    };
+
+    // FIXED: Robust Counter Script
+    function animateCounters() {
+        document.querySelectorAll('.counter').forEach(counter => {
+            const target = parseInt(counter.innerText);
+            let current = 0;
+            const increment = target / 50; // Adjust speed here
+            
+            const update = () => {
+                if (current < target) {
+                    current += increment;
+                    counter.innerText = Math.ceil(current);
+                    requestAnimationFrame(update);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            update();
+        });
+    }
+
+    const chartColors = ['#ff4d4d', '#ffa500', '#00e676'];
+
+    new Chart(document.getElementById('riskChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['High', 'Medium', 'Low'],
+            datasets: [{
+                data: [riskCounts.high, riskCounts.medium, riskCounts.low],
+                backgroundColor: chartColors,
+                borderWidth: 0,
+                hoverOffset: 25
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '72%',
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#f8fafc', padding: 20, font: { family: 'Plus Jakarta Sans', size: 12 } } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('barChart'), {
+        type: 'bar',
+        data: {
+            labels: ['High Risk', 'Medium Risk', 'Low Risk'],
+            datasets: [{
+                data: [riskCounts.high, riskCounts.medium, riskCounts.low],
+                backgroundColor: chartColors,
+                borderRadius: 12
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            },
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    // Run animation after initial render
+    window.onload = animateCounters;
+</script>
+<button id="chat-toggle">🤖 AI Assistant</button>
+
+<div id="chatbox" class="hidden">
+
+    <div class="chat-header">
+        <select id="chat-role">
+            <option value="triage">Triage Mode</option>
+            <option value="support">Patient Support</option>
+            <option value="doctor">Doctor Assistant</option>
+        </select>
+
+        <select id="chat-language">
+            <option value="en-US">English</option>
+            <option value="hi-IN">Hindi</option>
+            <option value="te-IN">Telugu</option>
+            <option value="ta-IN">Tamil</option>
+            <option value="kn-IN">Kannada</option>
+        </select>
+    </div>
+
+    <div id="chat-messages"></div>
+
+    <div class="chat-input">
+        <button id="mic-btn">🎤</button>
+        <input type="text" id="chat-input-field" placeholder="Type message..." />
+        <button id="send-btn">Send</button>
+    </div>
+
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const toggleBtn = document.getElementById("chat-toggle");
+    const chatBox = document.getElementById("chatbox");
+    const chatMessages = document.getElementById("chat-messages");
+    const userInput = document.getElementById("chat-input-field");
+    const sendBtn = document.getElementById("send-btn");
+    const micBtn = document.getElementById("mic-btn");
+    const roleSelect = document.getElementById("chat-role");
+    const languageSelect = document.getElementById("chat-language");
+
+    toggleBtn.addEventListener("click", () => {
+        chatBox.classList.toggle("hidden");
+    });
+
+    function sendMessage() {
+        const message = userInput.value.trim();
+        if (!message) return;
+
+        chatMessages.innerHTML += `
+            <div class="chat-bubble user">${message}</div>
+        `;
+
+        userInput.value = "";
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                message: message,
+                role: roleSelect.value,
+                language: languageSelect.value
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            chatMessages.innerHTML += `
+                <div class="chat-bubble ai">${data.reply}</div>
+            `;
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            const speech = new SpeechSynthesisUtterance(data.reply);
+            speech.lang = languageSelect.value;
+            window.speechSynthesis.speak(speech);
+        });
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+
+    userInput.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+            sendMessage();
+        }
+    });
+
+    // 🎤 Voice Recognition
+    if ('webkitSpeechRecognition' in window) {
+
+        const recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        micBtn.addEventListener("click", () => {
+            recognition.lang = languageSelect.value;
+            recognition.start();
+            micBtn.classList.add("listening");
+        });
+
+        recognition.onresult = function(event) {
+            userInput.value = event.results[0][0].transcript;
+            micBtn.classList.remove("listening");
+        };
+
+        recognition.onend = function() {
+            micBtn.classList.remove("listening");
+        };
+
+    } else {
+        micBtn.style.display = "none";
+    }
+
+});
+</script>
+</body>
+</html>

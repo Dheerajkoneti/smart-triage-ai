@@ -1,0 +1,1203 @@
+[
+  {
+    "id": 1,
+    "name": "Rainbow Children Hospital Branch 1",
+    "location": "Hyderabad, Kukatpally",
+    "distance_km": 6.6,
+    "departments": [
+      "Gastroenterology",
+      "ICU",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 10,
+      "General": 60,
+      "Emergency": 4
+    },
+    "specialists": [
+      "Neurologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Yashoda Hospital Branch 2",
+    "location": "Hyderabad, Gachibowli",
+    "distance_km": 7.7,
+    "departments": [
+      "ICU",
+      "Orthopedics",
+      "General"
+    ],
+    "beds": {
+      "ICU": 11,
+      "General": 40,
+      "Emergency": 12
+    },
+    "specialists": [
+      "Neurologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Sunshine Hospital Branch 3",
+    "location": "Hyderabad, Hitech City",
+    "distance_km": 4.4,
+    "departments": [
+      "ICU",
+      "Orthopedics",
+      "General"
+    ],
+    "beds": {
+      "ICU": 12,
+      "General": 23,
+      "Emergency": 6
+    },
+    "specialists": [
+      "Transplant Surgeon",
+      "Critical Care Specialist"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Yashoda Hospital Branch 4",
+    "location": "Hyderabad, Secunderabad",
+    "distance_km": 4.3,
+    "departments": [
+      "ICU",
+      "Orthopedics",
+      "General"
+    ],
+    "beds": {
+      "ICU": 5,
+      "General": 14,
+      "Emergency": 3
+    },
+    "specialists": [
+      "Pediatrician",
+      "Neonatologist"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "KIMS Hospital Branch 5",
+    "location": "Hyderabad, Paradise",
+    "distance_km": 3.0,
+    "departments": [
+      "Orthopedics",
+      "ICU",
+      "General"
+    ],
+    "beds": {
+      "ICU": 7,
+      "General": 32,
+      "Emergency": 18
+    },
+    "specialists": [
+      "Gastroenterologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Medicover Hospital Branch 6",
+    "location": "Hyderabad, Hitech City",
+    "distance_km": 5.7,
+    "departments": [
+      "Multi Specialty",
+      "ICU",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 9,
+      "General": 32,
+      "Emergency": 7
+    },
+    "specialists": [
+      "Gastroenterologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Yashoda Hospital Branch 7",
+    "location": "Hyderabad, Hitech City",
+    "distance_km": 7.9,
+    "departments": [
+      "Gastroenterology",
+      "ICU",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 5,
+      "General": 17,
+      "Emergency": 20
+    },
+    "specialists": [
+      "Transplant Surgeon",
+      "Critical Care Specialist"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Continental Hospital Branch 8",
+    "location": "Hyderabad, Hitech City",
+    "distance_km": 13.3,
+    "departments": [
+      "ICU",
+      "Cardiology",
+      "Oncology"
+    ],
+    "beds": {
+      "ICU": 12,
+      "General": 36,
+      "Emergency": 6
+    },
+    "specialists": [
+      "Orthopedic Surgeon",
+      "General Physician"
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Continental Hospital Branch 9",
+    "location": "Hyderabad, Paradise",
+    "distance_km": 13.2,
+    "departments": [
+      "ICU",
+      "Cardiology",
+      "Oncology"
+    ],
+    "beds": {
+      "ICU": 11,
+      "General": 50,
+      "Emergency": 8
+    },
+    "specialists": [
+      "Orthopedic Surgeon",
+      "General Physician"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Yashoda Hospital Branch 10",
+    "location": "Hyderabad, Kukatpally",
+    "distance_km": 6.5,
+    "departments": [
+      "Orthopedics",
+      "ICU",
+      "General"
+    ],
+    "beds": {
+      "ICU": 9,
+      "General": 38,
+      "Emergency": 5
+    },
+    "specialists": [
+      "Neurologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Care Hospital Branch 11",
+    "location": "Hyderabad, Nanakramguda",
+    "distance_km": 14.4,
+    "departments": [
+      "Oncology",
+      "ICU"
+    ],
+    "beds": {
+      "ICU": 12,
+      "General": 29,
+      "Emergency": 11
+    },
+    "specialists": [
+      "Pediatrician",
+      "Neonatologist"
+    ]
+  },
+  {
+    "id": 12,
+    "name": "AIG Hospital Branch 12",
+    "location": "Hyderabad, Secunderabad",
+    "distance_km": 10.1,
+    "departments": [
+      "Transplant",
+      "ICU",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 2,
+      "General": 19,
+      "Emergency": 17
+    },
+    "specialists": [
+      "Cardiologist",
+      "General Physician",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 13,
+    "name": "AIG Hospital Branch 13",
+    "location": "Hyderabad, Banjara Hills",
+    "distance_km": 9.3,
+    "departments": [
+      "Multi Specialty",
+      "ICU",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 3,
+      "General": 54,
+      "Emergency": 9
+    },
+    "specialists": [
+      "Gastroenterologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 14,
+    "name": "Sunshine Hospital Branch 14",
+    "location": "Hyderabad, Banjara Hills",
+    "distance_km": 10.6,
+    "departments": [
+      "Gastroenterology",
+      "ICU",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 7,
+      "General": 46,
+      "Emergency": 5
+    },
+    "specialists": [
+      "Oncologist",
+      "Critical Care Specialist"
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Prathima Hospital Branch 15",
+    "location": "Hyderabad, Begumpet",
+    "distance_km": 7.0,
+    "departments": [
+      "Oncology",
+      "ICU"
+    ],
+    "beds": {
+      "ICU": 3,
+      "General": 14,
+      "Emergency": 7
+    },
+    "specialists": [
+      "Cardiologist",
+      "General Physician",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Medicover Hospital Branch 16",
+    "location": "Hyderabad, Hitech City",
+    "distance_km": 2.7,
+    "departments": [
+      "ICU",
+      "Neurology",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 7,
+      "General": 48,
+      "Emergency": 9
+    },
+    "specialists": [
+      "Pediatrician",
+      "Neonatologist"
+    ]
+  },
+  {
+    "id": 17,
+    "name": "Yashoda Hospital Branch 17",
+    "location": "Hyderabad, Jubilee Hills",
+    "distance_km": 9.4,
+    "departments": [
+      "Gastroenterology",
+      "ICU",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 11,
+      "General": 28,
+      "Emergency": 20
+    },
+    "specialists": [
+      "Gastroenterologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 18,
+    "name": "Continental Hospital Branch 18",
+    "location": "Hyderabad, Hitech City",
+    "distance_km": 6.6,
+    "departments": [
+      "ICU",
+      "Cardiology",
+      "Oncology"
+    ],
+    "beds": {
+      "ICU": 2,
+      "General": 42,
+      "Emergency": 13
+    },
+    "specialists": [
+      "Transplant Surgeon",
+      "Critical Care Specialist"
+    ]
+  },
+  {
+    "id": 19,
+    "name": "Medicover Hospital Branch 19",
+    "location": "Hyderabad, Kukatpally",
+    "distance_km": 8.6,
+    "departments": [
+      "ICU",
+      "Emergency",
+      "Cardiology",
+      "General"
+    ],
+    "beds": {
+      "ICU": 3,
+      "General": 34,
+      "Emergency": 4
+    },
+    "specialists": [
+      "Gastroenterologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 20,
+    "name": "Care Hospital Branch 20",
+    "location": "Hyderabad, Lakdikapul",
+    "distance_km": 11.9,
+    "departments": [
+      "Orthopedics",
+      "ICU",
+      "General"
+    ],
+    "beds": {
+      "ICU": 9,
+      "General": 17,
+      "Emergency": 7
+    },
+    "specialists": [
+      "Gastroenterologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 21,
+    "name": "Omega Cancer Hospital Branch 21",
+    "location": "Hyderabad, Nanakramguda",
+    "distance_km": 14.8,
+    "departments": [
+      "ICU",
+      "Cardiology",
+      "Oncology"
+    ],
+    "beds": {
+      "ICU": 12,
+      "General": 41,
+      "Emergency": 18
+    },
+    "specialists": [
+      "Gastroenterologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 22,
+    "name": "Omega Cancer Hospital Branch 22",
+    "location": "Hyderabad, Begumpet",
+    "distance_km": 4.1,
+    "departments": [
+      "ICU",
+      "Neurology",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 6,
+      "General": 37,
+      "Emergency": 9
+    },
+    "specialists": [
+      "Gastroenterologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 23,
+    "name": "Omega Cancer Hospital Branch 23",
+    "location": "Hyderabad, Secunderabad",
+    "distance_km": 9.8,
+    "departments": [
+      "ICU",
+      "Neurology",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 7,
+      "General": 28,
+      "Emergency": 20
+    },
+    "specialists": [
+      "Neurologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 24,
+    "name": "Global Hospital Branch 24",
+    "location": "Hyderabad, Kukatpally",
+    "distance_km": 12.4,
+    "departments": [
+      "Pediatrics",
+      "ICU"
+    ],
+    "beds": {
+      "ICU": 5,
+      "General": 32,
+      "Emergency": 18
+    },
+    "specialists": [
+      "Oncologist",
+      "Critical Care Specialist"
+    ]
+  },
+  {
+    "id": 25,
+    "name": "Sunshine Hospital Branch 25",
+    "location": "Hyderabad, Kukatpally",
+    "distance_km": 9.7,
+    "departments": [
+      "ICU",
+      "Cardiology",
+      "Oncology"
+    ],
+    "beds": {
+      "ICU": 11,
+      "General": 12,
+      "Emergency": 20
+    },
+    "specialists": [
+      "Neurologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 26,
+    "name": "Care Hospital Branch 26",
+    "location": "Hyderabad, Begumpet",
+    "distance_km": 14.8,
+    "departments": [
+      "ICU",
+      "Cardiology",
+      "Oncology"
+    ],
+    "beds": {
+      "ICU": 6,
+      "General": 43,
+      "Emergency": 12
+    },
+    "specialists": [
+      "Oncologist",
+      "Critical Care Specialist"
+    ]
+  },
+  {
+    "id": 27,
+    "name": "Osmania General Hospital Branch 27",
+    "location": "Hyderabad, Jubilee Hills",
+    "distance_km": 14.5,
+    "departments": [
+      "Multi Specialty",
+      "ICU",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 7,
+      "General": 41,
+      "Emergency": 15
+    },
+    "specialists": [
+      "Gastroenterologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 28,
+    "name": "Yashoda Hospital Branch 28",
+    "location": "Hyderabad, Jubilee Hills",
+    "distance_km": 12.7,
+    "departments": [
+      "Oncology",
+      "ICU"
+    ],
+    "beds": {
+      "ICU": 6,
+      "General": 31,
+      "Emergency": 16
+    },
+    "specialists": [
+      "Orthopedic Surgeon",
+      "General Physician"
+    ]
+  },
+  {
+    "id": 29,
+    "name": "Apollo Hospital Branch 29",
+    "location": "Hyderabad, Kukatpally",
+    "distance_km": 4.8,
+    "departments": [
+      "Orthopedics",
+      "ICU",
+      "General"
+    ],
+    "beds": {
+      "ICU": 7,
+      "General": 33,
+      "Emergency": 8
+    },
+    "specialists": [
+      "Gastroenterologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 30,
+    "name": "Continental Hospital Branch 30",
+    "location": "Hyderabad, Paradise",
+    "distance_km": 12.8,
+    "departments": [
+      "Orthopedics",
+      "ICU",
+      "General"
+    ],
+    "beds": {
+      "ICU": 3,
+      "General": 16,
+      "Emergency": 5
+    },
+    "specialists": [
+      "Oncologist",
+      "Critical Care Specialist"
+    ]
+  },
+  {
+    "id": 31,
+    "name": "Omega Cancer Hospital Branch 31",
+    "location": "Hyderabad, Hitech City",
+    "distance_km": 4.6,
+    "departments": [
+      "Orthopedics",
+      "ICU",
+      "General"
+    ],
+    "beds": {
+      "ICU": 3,
+      "General": 38,
+      "Emergency": 10
+    },
+    "specialists": [
+      "Orthopedic Surgeon",
+      "General Physician"
+    ]
+  },
+  {
+    "id": 32,
+    "name": "KIMS Hospital Branch 32",
+    "location": "Hyderabad, Paradise",
+    "distance_km": 13.6,
+    "departments": [
+      "ICU",
+      "Orthopedics",
+      "General"
+    ],
+    "beds": {
+      "ICU": 11,
+      "General": 13,
+      "Emergency": 17
+    },
+    "specialists": [
+      "Orthopedic Surgeon",
+      "General Physician"
+    ]
+  },
+  {
+    "id": 33,
+    "name": "KIMS Hospital Branch 33",
+    "location": "Hyderabad, Lakdikapul",
+    "distance_km": 10.0,
+    "departments": [
+      "Transplant",
+      "ICU",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 3,
+      "General": 32,
+      "Emergency": 11
+    },
+    "specialists": [
+      "Orthopedic Surgeon",
+      "General Physician"
+    ]
+  },
+  {
+    "id": 34,
+    "name": "Medicover Hospital Branch 34",
+    "location": "Hyderabad, Lakdikapul",
+    "distance_km": 3.3,
+    "departments": [
+      "ICU",
+      "Cardiology",
+      "Oncology"
+    ],
+    "beds": {
+      "ICU": 4,
+      "General": 22,
+      "Emergency": 6
+    },
+    "specialists": [
+      "Transplant Surgeon",
+      "Critical Care Specialist"
+    ]
+  },
+  {
+    "id": 35,
+    "name": "AIG Hospital Branch 35",
+    "location": "Hyderabad, Lakdikapul",
+    "distance_km": 7.4,
+    "departments": [
+      "Gastroenterology",
+      "ICU",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 5,
+      "General": 30,
+      "Emergency": 15
+    },
+    "specialists": [
+      "Pediatrician",
+      "Neonatologist"
+    ]
+  },
+  {
+    "id": 36,
+    "name": "Rainbow Children Hospital Branch 36",
+    "location": "Hyderabad, Lakdikapul",
+    "distance_km": 5.0,
+    "departments": [
+      "Oncology",
+      "ICU"
+    ],
+    "beds": {
+      "ICU": 12,
+      "General": 35,
+      "Emergency": 7
+    },
+    "specialists": [
+      "Gastroenterologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 37,
+    "name": "Sunshine Hospital Branch 37",
+    "location": "Hyderabad, Lakdikapul",
+    "distance_km": 2.6,
+    "departments": [
+      "Oncology",
+      "ICU"
+    ],
+    "beds": {
+      "ICU": 9,
+      "General": 51,
+      "Emergency": 19
+    },
+    "specialists": [
+      "Neurologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 38,
+    "name": "Rainbow Children Hospital Branch 38",
+    "location": "Hyderabad, Hitech City",
+    "distance_km": 3.4,
+    "departments": [
+      "ICU",
+      "Cardiology",
+      "Oncology"
+    ],
+    "beds": {
+      "ICU": 5,
+      "General": 35,
+      "Emergency": 13
+    },
+    "specialists": [
+      "Gastroenterologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 39,
+    "name": "Global Hospital Branch 39",
+    "location": "Hyderabad, Hitech City",
+    "distance_km": 4.3,
+    "departments": [
+      "ICU",
+      "Emergency",
+      "Cardiology",
+      "General"
+    ],
+    "beds": {
+      "ICU": 5,
+      "General": 49,
+      "Emergency": 13
+    },
+    "specialists": [
+      "Orthopedic Surgeon",
+      "General Physician"
+    ]
+  },
+  {
+    "id": 40,
+    "name": "Care Hospital Branch 40",
+    "location": "Hyderabad, Banjara Hills",
+    "distance_km": 13.9,
+    "departments": [
+      "ICU",
+      "Neurology",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 6,
+      "General": 18,
+      "Emergency": 3
+    },
+    "specialists": [
+      "Cardiologist",
+      "General Physician",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 41,
+    "name": "Osmania General Hospital Branch 41",
+    "location": "Hyderabad, Paradise",
+    "distance_km": 12.6,
+    "departments": [
+      "Pediatrics",
+      "ICU"
+    ],
+    "beds": {
+      "ICU": 2,
+      "General": 55,
+      "Emergency": 16
+    },
+    "specialists": [
+      "Orthopedic Surgeon",
+      "General Physician"
+    ]
+  },
+  {
+    "id": 42,
+    "name": "Continental Hospital Branch 42",
+    "location": "Hyderabad, Lakdikapul",
+    "distance_km": 9.8,
+    "departments": [
+      "ICU",
+      "Cardiology",
+      "Oncology"
+    ],
+    "beds": {
+      "ICU": 7,
+      "General": 25,
+      "Emergency": 20
+    },
+    "specialists": [
+      "Neurologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 43,
+    "name": "Osmania General Hospital Branch 43",
+    "location": "Hyderabad, Jubilee Hills",
+    "distance_km": 5.4,
+    "departments": [
+      "Orthopedics",
+      "ICU",
+      "General"
+    ],
+    "beds": {
+      "ICU": 5,
+      "General": 60,
+      "Emergency": 19
+    },
+    "specialists": [
+      "Gastroenterologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 44,
+    "name": "Osmania General Hospital Branch 44",
+    "location": "Hyderabad, Gachibowli",
+    "distance_km": 7.7,
+    "departments": [
+      "Orthopedics",
+      "ICU",
+      "General"
+    ],
+    "beds": {
+      "ICU": 7,
+      "General": 19,
+      "Emergency": 11
+    },
+    "specialists": [
+      "Orthopedic Surgeon",
+      "General Physician"
+    ]
+  },
+  {
+    "id": 45,
+    "name": "Medicover Hospital Branch 45",
+    "location": "Hyderabad, Lakdikapul",
+    "distance_km": 10.4,
+    "departments": [
+      "ICU",
+      "Emergency",
+      "Cardiology",
+      "General"
+    ],
+    "beds": {
+      "ICU": 3,
+      "General": 17,
+      "Emergency": 7
+    },
+    "specialists": [
+      "Neurologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 46,
+    "name": "Rainbow Children Hospital Branch 46",
+    "location": "Hyderabad, Kukatpally",
+    "distance_km": 7.8,
+    "departments": [
+      "Transplant",
+      "ICU",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 9,
+      "General": 60,
+      "Emergency": 16
+    },
+    "specialists": [
+      "Oncologist",
+      "Critical Care Specialist"
+    ]
+  },
+  {
+    "id": 47,
+    "name": "Osmania General Hospital Branch 47",
+    "location": "Hyderabad, Hitech City",
+    "distance_km": 2.5,
+    "departments": [
+      "Orthopedics",
+      "ICU",
+      "General"
+    ],
+    "beds": {
+      "ICU": 9,
+      "General": 22,
+      "Emergency": 11
+    },
+    "specialists": [
+      "Neurologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 48,
+    "name": "Omega Cancer Hospital Branch 48",
+    "location": "Hyderabad, Banjara Hills",
+    "distance_km": 6.0,
+    "departments": [
+      "Multi Specialty",
+      "ICU",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 5,
+      "General": 35,
+      "Emergency": 3
+    },
+    "specialists": [
+      "Pediatrician",
+      "Neonatologist"
+    ]
+  },
+  {
+    "id": 49,
+    "name": "Medicover Hospital Branch 49",
+    "location": "Hyderabad, Nanakramguda",
+    "distance_km": 6.5,
+    "departments": [
+      "ICU",
+      "Cardiology",
+      "Oncology"
+    ],
+    "beds": {
+      "ICU": 10,
+      "General": 23,
+      "Emergency": 8
+    },
+    "specialists": [
+      "Orthopedic Surgeon",
+      "General Physician"
+    ]
+  },
+  {
+    "id": 50,
+    "name": "Yashoda Hospital Branch 50",
+    "location": "Hyderabad, Paradise",
+    "distance_km": 10.6,
+    "departments": [
+      "Oncology",
+      "ICU"
+    ],
+    "beds": {
+      "ICU": 10,
+      "General": 60,
+      "Emergency": 16
+    },
+    "specialists": [
+      "Transplant Surgeon",
+      "Critical Care Specialist"
+    ]
+  },
+  {
+    "id": 51,
+    "name": "Prathima Hospital Branch 51",
+    "location": "Hyderabad, Lakdikapul",
+    "distance_km": 2.8,
+    "departments": [
+      "ICU",
+      "Neurology",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 2,
+      "General": 24,
+      "Emergency": 9
+    },
+    "specialists": [
+      "Orthopedic Surgeon",
+      "General Physician"
+    ]
+  },
+  {
+    "id": 52,
+    "name": "Continental Hospital Branch 52",
+    "location": "Hyderabad, Paradise",
+    "distance_km": 4.8,
+    "departments": [
+      "Pediatrics",
+      "ICU"
+    ],
+    "beds": {
+      "ICU": 7,
+      "General": 43,
+      "Emergency": 8
+    },
+    "specialists": [
+      "Cardiologist",
+      "General Physician",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 53,
+    "name": "Apollo Hospital Branch 53",
+    "location": "Hyderabad, Kukatpally",
+    "distance_km": 3.6,
+    "departments": [
+      "Orthopedics",
+      "ICU",
+      "General"
+    ],
+    "beds": {
+      "ICU": 5,
+      "General": 56,
+      "Emergency": 20
+    },
+    "specialists": [
+      "Oncologist",
+      "Critical Care Specialist"
+    ]
+  },
+  {
+    "id": 54,
+    "name": "Care Hospital Branch 54",
+    "location": "Hyderabad, Gachibowli",
+    "distance_km": 6.5,
+    "departments": [
+      "Pediatrics",
+      "ICU"
+    ],
+    "beds": {
+      "ICU": 3,
+      "General": 17,
+      "Emergency": 15
+    },
+    "specialists": [
+      "Transplant Surgeon",
+      "Critical Care Specialist"
+    ]
+  },
+  {
+    "id": 55,
+    "name": "Care Hospital Branch 55",
+    "location": "Hyderabad, Nanakramguda",
+    "distance_km": 10.3,
+    "departments": [
+      "ICU",
+      "Neurology",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 7,
+      "General": 54,
+      "Emergency": 12
+    },
+    "specialists": [
+      "Pediatrician",
+      "Neonatologist"
+    ]
+  },
+  {
+    "id": 56,
+    "name": "Gandhi Hospital Branch 56",
+    "location": "Hyderabad, Begumpet",
+    "distance_km": 13.4,
+    "departments": [
+      "ICU",
+      "Emergency",
+      "Cardiology",
+      "General"
+    ],
+    "beds": {
+      "ICU": 8,
+      "General": 42,
+      "Emergency": 12
+    },
+    "specialists": [
+      "Cardiologist",
+      "General Physician",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 57,
+    "name": "Global Hospital Branch 57",
+    "location": "Hyderabad, Nanakramguda",
+    "distance_km": 10.6,
+    "departments": [
+      "Transplant",
+      "ICU",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 3,
+      "General": 49,
+      "Emergency": 12
+    },
+    "specialists": [
+      "Neurologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 58,
+    "name": "Omega Cancer Hospital Branch 58",
+    "location": "Hyderabad, Paradise",
+    "distance_km": 4.6,
+    "departments": [
+      "Orthopedics",
+      "ICU",
+      "General"
+    ],
+    "beds": {
+      "ICU": 3,
+      "General": 55,
+      "Emergency": 20
+    },
+    "specialists": [
+      "Neurologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 59,
+    "name": "Prathima Hospital Branch 59",
+    "location": "Hyderabad, Lakdikapul",
+    "distance_km": 9.1,
+    "departments": [
+      "ICU",
+      "Emergency",
+      "Cardiology",
+      "General"
+    ],
+    "beds": {
+      "ICU": 4,
+      "General": 15,
+      "Emergency": 13
+    },
+    "specialists": [
+      "Gastroenterologist",
+      "Emergency Specialist"
+    ]
+  },
+  {
+    "id": 60,
+    "name": "Apollo Hospital Branch 60",
+    "location": "Hyderabad, Gachibowli",
+    "distance_km": 2.6,
+    "departments": [
+      "Multi Specialty",
+      "ICU",
+      "Emergency"
+    ],
+    "beds": {
+      "ICU": 8,
+      "General": 48,
+      "Emergency": 8
+    },
+    "specialists": [
+      "Cardiologist",
+      "General Physician",
+      "Emergency Specialist"
+    ]
+  }
+]

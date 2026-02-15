@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediTriage AI | Patient Intake</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0a192f;
+            --primary-neon: #00d2ff;
+            --secondary-neon: #3a7bd5;
+            --accent-purple: #9d50bb;
+            --glass: rgba(255, 255, 255, 0.03);
+            --text-bright: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            /* Matches landing page background */
+            background: 
+                linear-gradient(to bottom, rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.98)),
+                url('https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-attachment: fixed;
+            color: var(--text-bright);
+            display: flex;
+            justify-content: center;
+        }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            width: 100%;
+            max-width: 900px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.1), rgba(157, 80, 187, 0.1));
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0;
+            color: var(--primary-neon);
+            text-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+        }
+
+        .header p {
+            color: var(--text-dim);
+            margin-top: 10px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 4px solid var(--primary-neon);
+            padding-left: 15px;
+        }
+
+        .grid-2, .grid-3 {
+            display: grid;
+            gap: 20px;
+        }
+
+        .grid-2 { grid-template-columns: 1fr 1fr; }
+        .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+        input, select, textarea {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-neon);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+        }
+
+        /* Styling the symptoms and conditions chips */
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.3s;
+            color: var(--text-dim);
+        }
+
+        .chip:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .chip.active {
+            background: var(--primary-neon);
+            border-color: var(--primary-neon);
+            color: var(--bg-dark);
+            font-weight: 700;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        /* Animated Upload Box */
+        .upload {
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            color: var(--text-dim);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .upload:hover {
+            border-color: var(--primary-neon);
+            background: rgba(0, 210, 255, 0.05);
+            color: white;
+        }
+
+        /* Footer buttons matching landing page animations */
+        .footer {
+            padding: 30px 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+        }
+
+        button {
+            padding: 15px 35px;
+            border-radius: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+
+        .cancel {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-dim);
+        }
+
+        .cancel:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        .submit {
+            background: var(--primary-neon);
+            border: none;
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+        }
+
+        .submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.6);
+            background: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .footer { flex-direction: column-reverse; }
+            button { width: 100%; }
+        }
+        /* ===== AI CHAT ASSISTANT ===== */
+
+        #chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #00d2ff;
+            color: #0a192f;
+            padding: 14px 24px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 800;
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        #chatbox {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 20px;
+            border: 1px solid #00d2ff;
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+            z-index: 9998;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .chat-header {
+            padding: 15px;
+            background: rgba(0,210,255,0.1);
+        }
+
+        .chat-disclaimer {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+
+        #chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .chat-input {
+            padding: 10px;
+            display: flex;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 8px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: white;
+        }
+
+        .chat-input button {
+            background: #00d2ff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .chat-bubble.user {
+            background: #00d2ff;
+            color: #0a192f;
+            margin-left: auto;
+        }
+
+        .chat-bubble.ai {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            margin-right: auto;
+        }
+
+        #mic-btn.listening {
+            background: white;
+            color: #0a192f;
+        }
+        /* Fix dropdown options visibility */
+        select option {
+            color: black;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+
+<form method="POST" action="/predict" data-aos="fade-up">
+
+<div class="card">
+    <div class="header">
+        <h2>🩺 Patient Intake Form</h2>
+        <p>Enter patient information for AI-powered triage assessment</p>
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <h4>👤 Demographics</h4>
+            <div class="grid-2">
+                <input type="text" name="patient_id" placeholder="Patient ID (e.g. P001)" required>
+                <input type="number" name="age" placeholder="Age" required>
+            </div>
+            <div style="margin-top:20px;">
+                <select name="gender" required style="width: 100%;">
+                    <option value="">Select Gender</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="section">
+            <h4>💓 Vital Signs</h4>
+            <div class="grid-3">
+                <input type="number" name="bp" placeholder="Systolic BP (e.g. 120)" required>
+                <input type="number" name="hr" placeholder="Heart Rate (e.g. 72)" required>
+                <input type="number" step="0.1" name="temp" placeholder="Temperature (°C)" required>
+            </div>
+        </div>
+
+        <div class="section">
+            <h4>🩹 Symptoms *</h4>
+            <div class="chips">
+                <div class="chip">Chest pain</div>
+                <div class="chip">Palpitations</div>
+                <div class="chip">Irregular heartbeat</div>
+                <div class="chip">Shortness of breath</div>
+                <div class="chip">Difficulty breathing</div>
+                <div class="chip">Cough</div>
+                <div class="chip">Wheezing</div>
+                <div class="chip">Seizure</div>
+                <div class="chip">Stroke symptoms</div>
+                <div class="chip">Severe headache</div>
+                <div class="chip">Loss of consciousness</div>
+                <div class="chip">Confusion</div>
+                <div class="chip">Slurred speech</div>
+                <div class="chip">Weakness (one side)</div>
+                <div class="chip">Fever</div>
+                <div class="chip">Fatigue</div>
+                <div class="chip">Dizziness</div>
+                <div class="chip">Chills</div>
+                <div class="chip">Sweating</div>
+                <div class="chip">Vomiting</div>
+                <div class="chip">Nausea</div>
+                <div class="chip">Abdominal pain</div>
+                <div class="chip">Diarrhea</div>
+                <div class="chip">Constipation</div>
+                <div class="chip">Blood in stool</div>
+                <div class="chip">Severe bleeding</div>
+                <div class="chip">Back pain</div>
+                <div class="chip">Joint pain</div>
+                <div class="chip">Fracture suspected</div>
+                <div class="chip">Rash</div>
+                <div class="chip">Allergic reaction</div>
+                <div class="chip">Swelling</div>
+                <div class="chip">Blurred vision</div>
+                <div class="chip">Burn injury</div>
+                <div class="chip">Other</div>
+            </div>
+            <textarea name="symptoms" placeholder="Additional symptoms or notes..." required></textarea>
+        </div>
+
+        <div class="section">
+            <h4>📋 Pre-existing Conditions</h4>
+            <div class="chips">
+                <div class="chip">Heart Disease</div>
+                <div class="chip">Heart Failure</div>
+                <div class="chip">Arrhythmia</div>
+                <div class="chip">Diabetes</div>
+                <div class="chip">Hypertension</div>
+                <div class="chip">Obesity</div>
+                <div class="chip">Asthma</div>
+                <div class="chip">COPD</div>
+                <div class="chip">Tuberculosis</div>
+                <div class="chip">Stroke History</div>
+                <div class="chip">Epilepsy</div>
+                <div class="chip">Migraine</div>
+                <div class="chip">Kidney Disease</div>
+                <div class="chip">Liver Disease</div>
+                <div class="chip">Thyroid Disorder</div>
+                <div class="chip">Cancer</div>
+                <div class="chip">Chemotherapy</div>
+                <div class="chip">Autoimmune Disease</div>
+                <div class="chip">HIV</div>
+                <div class="chip">Depression</div>
+                <div class="chip">Anxiety</div>
+                <div class="chip">Pregnancy</div>
+                <div class="chip">Recent Surgery</div>
+                <div class="chip">None</div>
+            </div>
+            <textarea name="conditions" placeholder="Other conditions (if any)..."></textarea>
+        </div>
+
+        <div class="section">
+            <h4>📄 EHR/EMR Document (Optional)</h4>
+            <div class="upload">
+                <span style="font-size: 1.5rem;">📁</span><br>
+                Click to upload PDF document<br>
+                <small>PDF files only</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <button type="button" class="cancel" onclick="window.location.href='/dashboard'">Cancel</button>
+        <button type="submit" class="submit">Submit for Triage</button>
+    </div>
+</div>
+
+</form>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ once: true });
+
+    document.querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            chip.classList.toggle('active');
+        });
+    });
+</script>
+<button id="chat-toggle">🤖 AI Assistant</button>
+
+<div id="chatbox" class="hidden">
+
+    <div class="chat-header">
+        <select id="chat-role">
+            <option value="triage">Triage Mode</option>
+            <option value="support">Patient Support</option>
+            <option value="doctor">Doctor Assistant</option>
+        </select>
+
+        <select id="chat-language">
+            <option value="en-US">English</option>
+            <option value="hi-IN">Hindi</option>
+            <option value="te-IN">Telugu</option>
+            <option value="ta-IN">Tamil</option>
+            <option value="kn-IN">Kannada</option>
+        </select>
+
+        <p class="chat-disclaimer">
+            AI guidance only. Not a replacement for professionals.
+        </p>
+    </div>
+
+    <div id="chat-messages"></div>
+
+    <div class="chat-input">
+        <button id="mic-btn">🎤</button>
+        <input type="text" id="chat-input-field" placeholder="Type message..." />
+        <button id="send-btn">Send</button>
+    </div>
+
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const toggleBtn = document.getElementById("chat-toggle");
+    const chatBox = document.getElementById("chatbox");
+    const chatMessages = document.getElementById("chat-messages");
+    const userInput = document.getElementById("chat-input-field");
+    const sendBtn = document.getElementById("send-btn");
+    const micBtn = document.getElementById("mic-btn");
+    const roleSelect = document.getElementById("chat-role");
+    const languageSelect = document.getElementById("chat-language");
+
+    toggleBtn.addEventListener("click", () => {
+        chatBox.classList.toggle("hidden");
+    });
+
+    function sendMessage() {
+        const message = userInput.value.trim();
+        if (!message) return;
+
+        chatMessages.innerHTML += `
+            <div class="chat-bubble user">${message}</div>
+        `;
+
+        userInput.value = "";
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                message: message,
+                role: roleSelect.value,
+                language: languageSelect.value
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            chatMessages.innerHTML += `
+                <div class="chat-bubble ai">${data.reply}</div>
+            `;
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            const speech = new SpeechSynthesisUtterance(data.reply);
+            speech.lang = languageSelect.value;
+            window.speechSynthesis.speak(speech);
+        });
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+
+    userInput.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+            sendMessage();
+        }
+    });
+
+    // 🎤 Voice Recognition
+    if ('webkitSpeechRecognition' in window) {
+
+        const recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        micBtn.addEventListener("click", () => {
+            recognition.lang = languageSelect.value;
+            recognition.start();
+            micBtn.classList.add("listening");
+        });
+
+        recognition.onresult = function(event) {
+            userInput.value = event.results[0][0].transcript;
+            micBtn.classList.remove("listening");
+        };
+
+        recognition.onend = function() {
+            micBtn.classList.remove("listening");
+        };
+
+    } else {
+        micBtn.style.display = "none";
+    }
+
+});
+</script>
+</body>
+</html>

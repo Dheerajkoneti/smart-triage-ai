@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Core Retraining | MediTriage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0a192f;
+            --primary-neon: #00d2ff;
+            --text-bright: #f8fafc;
+            --text-dim: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(to bottom, rgba(10, 25, 47, 0.96), rgba(10, 25, 47, 0.99)),
+                url('https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover; background-attachment: fixed;
+            color: var(--text-bright); min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* --- Training Card --- */
+        .retrain-card {
+            background: var(--glass);
+            backdrop-filter: blur(30px);
+            border-radius: 35px;
+            padding: 50px;
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid var(--border);
+            box-shadow: 0 50px 120px rgba(0, 0, 0, 0.6);
+            text-align: center;
+        }
+
+        .retrain-card h2 {
+            font-size: 2.2rem; font-weight: 800; margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, var(--primary-neon));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .retrain-card p { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 30px; }
+
+        /* --- Training Status Console --- */
+        .terminal {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            color: #00ff88;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            height: 120px;
+            overflow-y: auto;
+        }
+
+        .terminal-line { margin-bottom: 5px; opacity: 0.8; }
+
+        /* --- Action Button --- */
+        .retrain-btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: 14px;
+            border: none;
+            background: var(--primary-neon);
+            color: var(--bg-dark);
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .retrain-btn:hover {
+            background: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.4);
+        }
+
+        .retrain-btn:disabled {
+            background: var(--text-dim);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* --- Loading Spinner --- */
+        .spinner {
+            width: 20px; height: 20px;
+            border: 3px solid rgba(10, 25, 47, 0.3);
+            border-top: 3px solid var(--bg-dark);
+            border-radius: 50%;
+            display: none;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .back-link:hover { color: var(--primary-neon); transform: translateX(-5px); }
+    </style>
+</head>
+<body>
+
+<div class="retrain-card" data-aos="zoom-in" data-aos-duration="1000">
+    <h2>AI Core Retraining</h2>
+    <p>Optimize clinical triage parameters with latest patient datasets.</p>
+
+    <div class="terminal" id="terminal">
+        <div class="terminal-line">> System Idle... Ready for core optimization.</div>
+    </div>
+
+    <form method="POST" id="retrainForm">
+        <button type="submit" class="retrain-btn" id="submitBtn">
+            <span class="spinner" id="spinner"></span>
+            <span id="btnText">Start Optimization</span>
+        </button>
+    </form>
+
+    <a href="/admin_dashboard" class="back-link">← Return to Intelligence Hub</a>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init();
+
+    const form = document.getElementById('retrainForm');
+    const btn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const spinner = document.getElementById('spinner');
+    const terminal = document.getElementById('terminal');
+
+    form.onsubmit = function() {
+        btn.disabled = true;
+        btnText.innerText = "Processing Data...";
+        spinner.style.display = "block";
+        
+        // Visual Terminal Simulation
+        const messages = [
+            "> Loading patient_data.csv...",
+            "> Encoding categorical clinical features...",
+            "> Initializing Random Forest Classifier...",
+            "> Iterating training cycles...",
+            "> Calculating new accuracy weights..."
+        ];
+
+        let i = 0;
+        const interval = setInterval(() => {
+            if(i < messages.length) {
+                const line = document.createElement('div');
+                line.className = 'terminal-line';
+                line.innerText = messages[i];
+                terminal.appendChild(line);
+                terminal.scrollTop = terminal.scrollHeight;
+                i++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 800);
+    };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Doctor Dashboard | MediTriage AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--bg:#0a192f;
+--card:#112240;
+--primary:#00d2ff;
+--danger:#ff4d4d;
+--warning:#ffa500;
+--success:#00e676;
+--text-dim:#94a3b8;
+}
+
+body{
+margin:0;
+font-family:'Plus Jakarta Sans',sans-serif;
+background:linear-gradient(to bottom,#0a192f,#07121f);
+color:white;
+}
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 6%;
+background:#081424;
+border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.navbar h2{
+margin:0;
+color:var(--primary);
+}
+
+.navbar .nav-buttons{
+display:flex;
+gap:15px;
+}
+
+.btn{
+padding:8px 16px;
+border-radius:8px;
+font-weight:700;
+border:none;
+cursor:pointer;
+}
+
+.btn-primary{
+background:var(--primary);
+color:#0a192f;
+}
+
+.btn-primary:hover{
+background:white;
+}
+
+.btn-danger{
+background:rgba(255,77,77,0.1);
+color:var(--danger);
+border:1px solid var(--danger);
+}
+
+.btn-danger:hover{
+background:var(--danger);
+color:white;
+}
+
+.container{
+padding:40px 6%;
+}
+
+/* PROFILE */
+.profile-card{
+background:var(--card);
+padding:25px;
+border-radius:18px;
+margin-bottom:30px;
+}
+
+.profile-card h1{
+margin:0;
+}
+
+.profile-card p{
+color:var(--text-dim);
+margin-top:8px;
+}
+
+/* STATS */
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:40px;
+}
+
+.stat-box{
+background:var(--card);
+padding:25px;
+border-radius:18px;
+text-align:center;
+transition:0.3s;
+}
+
+.stat-box:hover{
+transform:translateY(-5px);
+border:1px solid var(--primary);
+}
+
+.stat-box h2{
+margin:10px 0 0;
+font-size:28px;
+}
+
+.stat-active{color:var(--primary);}
+.stat-high{color:var(--danger);}
+.stat-assigned{color:var(--success);}
+
+/* ALERT */
+.alert-box{
+background:rgba(255,77,77,0.1);
+border:1px solid var(--danger);
+padding:20px;
+border-radius:15px;
+margin-bottom:30px;
+}
+
+/* TABLE */
+.card{
+background:var(--card);
+padding:25px;
+border-radius:18px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+padding:14px;
+border-bottom:1px solid rgba(255,255,255,0.05);
+text-align:left;
+}
+
+th{
+color:var(--text-dim);
+font-size:13px;
+}
+
+.risk-pill{
+padding:6px 14px;
+border-radius:50px;
+font-size:12px;
+font-weight:700;
+}
+
+.High{background:rgba(255,77,77,0.15);color:var(--danger);border:1px solid var(--danger);}
+.Medium{background:rgba(255,165,0,0.15);color:var(--warning);border:1px solid var(--warning);}
+.Low{background:rgba(0,230,118,0.15);color:var(--success);border:1px solid var(--success);}
+
+.action-btn{
+background:var(--primary);
+color:#0a192f;
+border:none;
+padding:6px 12px;
+border-radius:6px;
+cursor:pointer;
+font-weight:700;
+}
+
+.action-btn:hover{
+background:white;
+}
+     /* ===== AI CHAT ASSISTANT ===== */
+
+        #chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #00d2ff;
+            color: #0a192f;
+            padding: 14px 24px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 800;
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        #chatbox {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 20px;
+            border: 1px solid #00d2ff;
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+            z-index: 9998;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .chat-header {
+            padding: 15px;
+            background: rgba(0,210,255,0.1);
+        }
+
+        .chat-disclaimer {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+
+        #chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .chat-input {
+            padding: 10px;
+            display: flex;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 8px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: white;
+        }
+
+        .chat-input button {
+            background: #00d2ff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .chat-bubble.user {
+            background: #00d2ff;
+            color: #0a192f;
+            margin-left: auto;
+        }
+
+        .chat-bubble.ai {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            margin-right: auto;
+        }
+
+        #mic-btn.listening {
+            background: white;
+            color: #0a192f;
+        }
+        /* Fix dropdown options visibility */
+        select option {
+            color: black;
+            background: white;
+        }
+        /* =========================
+        ✨ BEAUTIFUL CHAT DROPDOWNS
+        ========================= */
+
+        .chat-header select {
+            background: rgba(255, 255, 255, 0.08);
+            color: #00d2ff;
+            border: 1px solid rgba(0, 210, 255, 0.5);
+            border-radius: 10px;
+            padding: 8px 30px 8px 12px;
+            font-weight: 600;
+            font-size: 13px;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            position: relative;
+        }
+
+        /* Hover effect */
+        .chat-header select:hover {
+            border-color: #00d2ff;
+            box-shadow: 0 0 10px rgba(0,210,255,0.4);
+        }
+
+        /* Focus glow */
+        .chat-header select:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(0,210,255,0.7);
+        }
+
+        /* Dropdown options */
+        .chat-header select option {
+            background: #0f172a;
+            color: white;
+        }
+
+        /* Add arrow icon */
+        .chat-header {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        /* Reference Patient Cards */
+.reference-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.ref-card{
+    background:linear-gradient(145deg,#0f1c2d,#112240);
+    padding:20px;
+    border-radius:16px;
+    border:1px solid rgba(0,210,255,0.15);
+    transition:0.3s;
+}
+
+.ref-card:hover{
+    transform:translateY(-5px);
+    border:1px solid #00d2ff;
+    box-shadow:0 0 15px rgba(0,210,255,0.3);
+}
+
+.ref-card h4{
+    margin-top:0;
+    color:#00d2ff;
+}
+        
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+<h2>🩺 Doctor Dashboard</h2>
+<div class="nav-buttons">
+    <a href="/upload" class="action-btn btn-upload">📁 Upload Doc</a>
+    <button onclick="window.location.href='/dashboard'" class="secondary-btn">👥 Patients List</button>
+    <button onclick="window.location.href='/analytics'" class="secondary-btn">🧠 Intelligence Hub</button>
+<a href="/logout" class="btn btn-danger">Logout</a>
+</div>
+</div>
+
+<div class="container">
+
+<!-- PROFILE -->
+<div class="profile-card">
+<h1>Welcome Dr. {{ doctor_name }}</h1>
+<p>
+🏥 {{ doctor_hospital }} |
+🧠 {{ doctor_specialization }} Specialist
+</p>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+
+   <!-- STATS -->
+<div class="stats">
+
+    <div class="stat-box">
+        <p>Assigned Patients</p>
+        <h2 class="stat-number stat-assigned">5</h2>
+    </div>
+
+    <div class="stat-box">
+        <p>Active Patients</p>
+        <h2 class="stat-number stat-active">3</h2>
+    </div>
+
+    <div class="stat-box">
+        <p>High Risk Cases</p>
+        <h2 class="stat-number stat-high">1</h2>
+    </div>
+
+</div>
+<!-- SAMPLE REFERENCE PATIENTS -->
+<div class="card" style="margin-bottom:30px;">
+    <h3 style="margin-bottom:20px;">📌 Reference Patients (Demo View)</h3>
+
+    <div class="reference-grid">
+
+        <div class="ref-card">
+            <h4>Patient ID: P101</h4>
+            <p><b>Age:</b> 45</p>
+            <p><b>Symptoms:</b> Chest Pain, Shortness of Breath</p>
+            <p><b>BP:</b> 150/95</p>
+            <p><b>HR:</b> 110 bpm</p>
+            <p><b>Temperature:</b> 99.5°F</p>
+            <span class="risk-pill High">High Risk</span>
+        </div>
+
+        <div class="ref-card">
+            <h4>Patient ID: P102</h4>
+            <p><b>Age:</b> 32</p>
+            <p><b>Symptoms:</b> Fever, Body Pain</p>
+            <p><b>BP:</b> 120/80</p>
+            <p><b>HR:</b> 88 bpm</p>
+            <p><b>Temperature:</b> 101°F</p>
+            <span class="risk-pill Medium">Medium Risk</span>
+        </div>
+
+        <div class="ref-card">
+            <h4>Patient ID: P103</h4>
+            <p><b>Age:</b> 26</p>
+            <p><b>Symptoms:</b> Mild Headache</p>
+            <p><b>BP:</b> 118/76</p>
+            <p><b>HR:</b> 72 bpm</p>
+            <p><b>Temperature:</b> 98.4°F</p>
+            <span class="risk-pill Low">Low Risk</span>
+        </div>
+
+    </div>
+</div>
+<!-- URGENT -->
+{% if urgent_patients %}
+<div class="alert-box">
+<h3>🚨 URGENT CASES ({{ urgent_patients|length }})</h3>
+<ul>
+{% for p in urgent_patients %}
+<li><b>{{ p.patient_id }}</b> - {{ p.symptoms }}</li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+<!-- PATIENT TABLE -->
+<div class="card">
+<table>
+<thead>
+<tr>
+<th>Patient ID</th>
+<th>Symptoms</th>
+<th>Risk</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+<td><b>P101</b></td>
+<td>Chest Pain, Shortness of Breath</td>
+<td><span class="risk-pill High">High</span></td>
+<td>Waiting</td>
+<td>
+<button class="action-btn">View</button>
+</td>
+</tr>
+
+<tr>
+<td><b>P102</b></td>
+<td>Fever, Body Pain</td>
+<td><span class="risk-pill Medium">Medium</span></td>
+<td>Under Review</td>
+<td>
+<button class="action-btn">View</button>
+</td>
+</tr>
+
+<tr>
+<td><b>P103</b></td>
+<td>Mild Headache</td>
+<td><span class="risk-pill Low">Low</span></td>
+<td>Completed</td>
+<td>
+<button class="action-btn">View</button>
+</td>
+</tr>
+
+<tr>
+<td><b>P104</b></td>
+<td>High BP, Dizziness</td>
+<td><span class="risk-pill High">High</span></td>
+<td>Waiting</td>
+<td>
+<button class="action-btn">View</button>
+</td>
+</tr>
+
+<tr>
+<td><b>P105</b></td>
+<td>Cough, Cold</td>
+<td><span class="risk-pill Low">Low</span></td>
+<td>Reviewed</td>
+<td>
+<button class="action-btn">View</button>
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+</div>
+</body>
+</html>
+<div id="modalContent"></div>
+<button id="chat-toggle">🤖 AI Assistant</button>
+
+<div id="chatbox" class="hidden">
+
+    <div class="chat-header">
+        <select id="chat-role">
+            <option value="triage">Triage Mode</option>
+            <option value="support">Patient Support</option>
+            <option value="doctor">Doctor Assistant</option>
+        </select>
+
+        <select id="chat-language">
+            <option value="en-US">English</option>
+            <option value="hi-IN">Hindi</option>
+            <option value="te-IN">Telugu</option>
+            <option value="ta-IN">Tamil</option>
+            <option value="kn-IN">Kannada</option>
+        </select>
+    </div>
+
+    <div id="chat-messages"></div>
+
+    <div class="chat-input">
+        <button id="mic-btn">🎤</button>
+        <input type="text" id="chat-input-field" placeholder="Type message..." />
+        <button id="send-btn">Send</button>
+    </div>
+
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const toggleBtn = document.getElementById("chat-toggle");
+    const chatBox = document.getElementById("chatbox");
+    const chatMessages = document.getElementById("chat-messages");
+    const userInput = document.getElementById("chat-input-field");
+    const sendBtn = document.getElementById("send-btn");
+    const micBtn = document.getElementById("mic-btn");
+    const roleSelect = document.getElementById("chat-role");
+    const languageSelect = document.getElementById("chat-language");
+
+    toggleBtn.addEventListener("click", () => {
+        chatBox.classList.toggle("hidden");
+    });
+
+    function sendMessage() {
+        const message = userInput.value.trim();
+        if (!message) return;
+
+        chatMessages.innerHTML += `
+            <div class="chat-bubble user">${message}</div>
+        `;
+
+        userInput.value = "";
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                message: message,
+                role: roleSelect.value,
+                language: languageSelect.value
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            chatMessages.innerHTML += `
+                <div class="chat-bubble ai">${data.reply}</div>
+            `;
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            const speech = new SpeechSynthesisUtterance(data.reply);
+            speech.lang = languageSelect.value;
+            window.speechSynthesis.speak(speech);
+        });
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+
+    userInput.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+            sendMessage();
+        }
+    });
+
+    // 🎤 Voice Recognition
+    if ('webkitSpeechRecognition' in window) {
+
+        const recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        micBtn.addEventListener("click", () => {
+            recognition.lang = languageSelect.value;
+            recognition.start();
+            micBtn.classList.add("listening");
+        });
+
+        recognition.onresult = function(event) {
+            userInput.value = event.results[0][0].transcript;
+            micBtn.classList.remove("listening");
+        };
+
+        recognition.onend = function() {
+            micBtn.classList.remove("listening");
+        };
+
+    } else {
+        micBtn.style.display = "none";
+    }
+
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard | MediTriage AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root{
+--bg:#0a192f;
+--card:#112240;
+--primary:#00d2ff;
+--danger:#ff4d4d;
+--warning:#ffa500;
+--success:#00e676;
+--text-dim:#94a3b8;
+}
+
+body{
+margin:0;
+font-family:'Plus Jakarta Sans',sans-serif;
+background:linear-gradient(to bottom,#0a192f,#07121f);
+color:white;
+}
+
+/* NAVBAR */
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 6%;
+background:#081424;
+border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.navbar h2{
+margin:0;
+color:var(--primary);
+}
+
+.navbar a{
+color:white;
+text-decoration:none;
+margin-left:15px;
+padding:8px 14px;
+border-radius:8px;
+font-weight:600;
+}
+
+.logout{
+background:rgba(255,77,77,0.1);
+border:1px solid var(--danger);
+color:var(--danger);
+}
+
+/* CONTAINER */
+.container{
+padding:40px 6%;
+}
+
+/* STATS */
+.stats-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:40px;
+}
+
+.stat-card{
+background:var(--card);
+padding:25px;
+border-radius:18px;
+text-align:center;
+transition:0.3s;
+}
+
+.stat-card:hover{
+transform:translateY(-5px);
+border:1px solid var(--primary);
+}
+
+.stat-card h2{
+margin:10px 0 0;
+font-size:28px;
+}
+
+/* SECTIONS */
+.section{
+background:var(--card);
+padding:25px;
+border-radius:18px;
+margin-bottom:40px;
+}
+
+/* TABLE */
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,td{
+padding:14px;
+border-bottom:1px solid rgba(255,255,255,0.05);
+text-align:left;
+}
+
+th{
+color:var(--text-dim);
+font-size:13px;
+}
+
+button{
+background:var(--primary);
+border:none;
+padding:6px 12px;
+border-radius:6px;
+cursor:pointer;
+font-weight:600;
+}
+
+button:hover{
+background:white;
+color:black;
+}
+
+/* URGENT */
+.urgent-box{
+background:rgba(255,77,77,0.1);
+border:1px solid var(--danger);
+padding:20px;
+border-radius:15px;
+}
+
+/* SMALL BUTTONS */
+.small-btn{
+padding:4px 10px;
+font-size:12px;
+}
+.chart-container {
+    width: 300px;      /* change size here */
+    height: 300px;     /* change size here */
+    margin: 0 auto;    /* center chart */
+}
+
+.chart-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+<h2>⚙ Admin Dashboard</h2>
+<div>
+<a href="/logout" class="logout">Logout</a>
+</div>
+</div>
+
+<div class="container">
+
+<!-- SYSTEM OVERVIEW -->
+<h2>🧠 System Overview</h2>
+<div class="stats-grid">
+
+<div class="stat-card">
+👨‍⚕️ Total Doctors
+<h2>{{ total_doctors }}</h2>
+</div>
+
+<div class="stat-card">
+🧑 Total Patients
+<h2>{{ total_patients }}</h2>
+</div>
+
+<div class="stat-card">
+📅 Total Appointments
+<h2>{{ total_appointments }}</h2>
+</div>
+
+<div class="stat-card">
+🚨 High Risk Cases
+<h2 style="color:var(--danger);">{{ high_risk_cases }}</h2>
+</div>
+
+<div class="stat-card">
+🏥 Departments
+<h2>{{ departments_count }}</h2>
+</div>
+
+<div class="stat-card">
+🧠 AI Predictions Today
+<h2>{{ ai_predictions_today }}</h2>
+</div>
+
+</div>
+
+<!-- DOCTOR MANAGEMENT -->
+<div class="section">
+<h3>👨‍⚕️ Doctor Management</h3>
+<a href="/add_doctor"><button>➕ Add Doctor</button></a>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Hospital</th>
+<th>Specialization</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+{% for d in doctors %}
+<tr>
+<td>{{ d[1] }}</td>
+<td>{{ d[2] }}</td>
+<td>{{ d[3] }}</td>
+<td>{{ d[4] }}</td>
+<td>
+<a href="/edit_doctor/{{ d[0] }}"><button class="small-btn">✏ Edit</button></a>
+<a href="/delete_doctor/{{ d[0] }}" 
+   class="btn btn-danger"
+   onclick="return confirm('Are you sure you want to delete this doctor?')">
+   Delete
+</a>
+</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+
+<!-- PATIENT MANAGEMENT -->
+<div class="section">
+<h3>🧑 Patient Management</h3>
+
+<table>
+<tr>
+<th>ID</th>
+<th>Symptoms</th>
+<th>Risk</th>
+<th>Assigned Doctor</th>
+<th>Action</th>
+</tr>
+
+{% for p in patients %}
+<tr>
+<td>{{ p[0] }}</td>
+<td>{{ p[1] }}</td>
+<td>{{ p[2] }}</td>
+<td>{{ p[3] }}</td>
+<td>
+<a href="/reassign/{{ p[0] }}">
+    <button class="small-btn">Reassign</button>
+</a>
+</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+
+<!-- AI ANALYTICS -->
+<div class="section">
+<h3>📊 AI Risk Distribution</h3>
+<div class="chart-container">
+    <canvas id="riskChart"></canvas>
+</div>
+</div>
+
+<!-- EMERGENCY PANEL -->
+<div class="section urgent-box">
+<h3>🚨 Emergency Monitoring (Top 5)</h3>
+
+{% for u in urgent_cases %}
+<div style="margin-bottom:10px;">
+<b>{{ u[0] }}</b> - {{ u[1] }}
+<a href="/escalate/{{ u[0] }}"><button class="small-btn">Escalate</button></a>
+<a href="/notify/{{ u[0] }}"><button class="small-btn">Notify</button></a>
+</div>
+{% endfor %}
+
+</div>
+
+<!-- AI CONTROLS -->
+<div class="section">
+<h3>🧠 Dataset & Model Controls</h3>
+<a href="/upload_dataset"><button>📤 Upload Dataset</button></a>
+<a href="/retrain_model"><button>🔄 Retrain Model</button></a>
+</div>
+
+<!-- SYSTEM CONTROLS -->
+<div class="section">
+<h3>🔐 System Controls</h3>
+<a href="{{ url_for('manage_roles') }}" ><button>🔐 Manage Roles</button></a>
+<a href="{{ url_for('view_logs') }}"><button>📋 View Logs</button></a>
+<a href="{{ url_for('disable_user_page') }}"><button>🛑 Disable User</button></a>
+</div>
+<!-- CHART JS -->
+<script>
+new Chart(document.getElementById("riskChart"), {
+    type: "pie",
+    data: {
+        labels: ["High", "Medium", "Low"],
+        datasets: [{
+            data: [
+                {{ risk_distribution.get('High',0) }},
+                {{ risk_distribution.get('Medium',0) }},
+                {{ risk_distribution.get('Low',0) }}
+            ]
+        }]
+    }
+});
+</script>
+
+</body>
+</html>

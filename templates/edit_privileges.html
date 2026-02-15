@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Privileges | MediTriage AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0a192f;
+            --primary-neon: #00d2ff;
+            --text-bright: #f8fafc;
+            --text-dim: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(to bottom, rgba(10, 25, 47, 0.94), rgba(10, 25, 47, 0.99)),
+                url('https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover; background-attachment: fixed;
+            color: var(--text-bright); height: 100vh;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+
+        /* --- Privileges Card --- */
+        .privilege-card {
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            border-radius: 28px;
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 440px;
+            border: 1px solid var(--border);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+            text-align: center;
+        }
+
+        .privilege-card h2 {
+            font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;
+            background: linear-gradient(to right, #fff, var(--primary-neon));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .user-info-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .user-info-box p { color: var(--text-dim); margin: 0; font-size: 0.9rem; }
+        .user-info-box strong { color: white; font-size: 1.1rem; }
+
+        /* --- Form Elements --- */
+        .input-group { margin-bottom: 25px; text-align: left; }
+        
+        label {
+            display: block; margin-bottom: 10px; font-size: 0.75rem;
+            font-weight: 700; color: var(--primary-neon);
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        select {
+            width: 100%; padding: 15px 20px; border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border);
+            color: white; font-family: inherit; font-size: 1rem; box-sizing: border-box;
+            appearance: none; cursor: pointer;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        select:focus {
+            outline: none; border-color: var(--primary-neon);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+        }
+
+        select option {
+            background: #0a192f;
+            color: white;
+        }
+
+        /* --- Action Button --- */
+        .update-btn {
+            width: 100%; padding: 16px; border-radius: 14px; border: none;
+            background: var(--primary-neon); color: var(--bg-dark);
+            font-weight: 800; font-size: 1rem; cursor: pointer;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 10px; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .update-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            background: #fff; box-shadow: 0 10px 30px rgba(0, 210, 255, 0.4);
+        }
+
+        .back-link {
+            display: inline-block; margin-top: 25px; font-size: 0.9rem;
+            color: var(--text-dim); text-decoration: none; font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-link:hover { color: var(--primary-neon); transform: translateX(-5px); }
+    </style>
+</head>
+<body>
+
+<div class="privilege-card" data-aos="zoom-in" data-aos-duration="1000">
+    <h2>Edit Privileges</h2>
+    
+    <div class="user-info-box">
+        <p>Modifying Access for:</p>
+        <strong>{{ user[1] }}</strong>
+    </div>
+    
+    <form method="POST">
+        <div class="input-group">
+            <label>Update System Role</label>
+            <select name="role" required>
+                <option value="Admin" {% if user[4] == 'Admin' %}selected{% endif %}>Administrator</option>
+                <option value="Doctor" {% if user[4] == 'Doctor' %}selected{% endif %}>Medical Doctor</option>
+                <option value="Nurse" {% if user[4] == 'Nurse' %}selected{% endif %}>Nurse / Triage Officer</option>
+            </select>
+        </div>
+        
+        <button type="submit" class="update-btn">Update Access Level</button>
+    </form>
+
+    <a href="/manage_roles" class="back-link">← Cancel and Return</a>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init();
+</script>
+
+</body>
+</html>
