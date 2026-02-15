@@ -1296,7 +1296,8 @@ def book_appointment():
 # APP EXECUTION
 # =========================================
 if __name__ == "__main__":
-    # Ensure data directory exists
     if not os.path.exists("data"):
         os.makedirs("data")
-    app.run(debug=True)
+
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
