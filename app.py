@@ -384,7 +384,7 @@ def predict():
         # 3️⃣ Auto Assign Doctor
         doctor_id = auto_assign_doctor(department)
 
-        # 4️⃣ Save to DATABASE (NOT CSV)
+        # 4️⃣ Save to DATABASE
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
@@ -395,26 +395,56 @@ def predict():
             (patient_id, age, gender, symptoms, bp, hr, temp, risk_level, department,
             contact_status, assigned_doctor, doctor_status, user_email)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        
-                """, (
-                    patient_id,
-                    age,
-                    gender,
-                    symptoms,
-                    bp,
-                    hr,
-                    temp,
-                    risk_level,
-                    department,
-                    "Pending",
-                    doctor_id,
-                    "Waiting",
+        """, (
+            patient_id,
+            age,
+            gender,
+            symptoms,
+            bp,
+            hr,
+            temp,
+            risk_level,
+            department,
+            "Pending",
+            doctor_id,
+            "Active",   # 🔥 Make active immediately
             user_email
         ))
+
+        # 🔥 Insert into predictions table for analytics
+        cursor.execute("""
+            INSERT INTO predictions (patient_id)
+            VALUES (?)
+        """, (patient_id,))
 
         conn.commit()
         conn.close()
 
+        # 4️⃣.1 Sync to CSV Dataset (Realtime Update)
+        csv_file = "data/patient_data.csv"
+        file_exists = os.path.isfile(csv_file)
+
+        with open(csv_file, mode="a", newline="") as file:
+            writer = csv.writer(file)
+
+            # Write header if file not exists
+            if not file_exists:
+                writer.writerow([
+                    "Patient_ID", "Age", "Gender", "Symptoms",
+                    "BP", "HR", "Temp", "Risk_Level", "Department"
+                ])
+
+            writer.writerow([
+                patient_id,
+                age,
+                gender,
+                symptoms,
+                bp,
+                hr,
+                temp,
+                risk_level,
+                department
+            ])
         # 5️⃣ Prepare UI Report
         raw_features = get_feature_importance(model, input_data)
         top_features = [
@@ -772,7 +802,7 @@ def patient_dashboard():
         hospital_id = appt[1]
 
         hospital_info = next(
-            (h for h in hospitals if h["id"] == hospital_id),
+            (h for h in hospitals if int(h["id"]) == int(hospital_id)),
             None
         )
 
@@ -927,13 +957,18 @@ def ai_suggestion(patient_id):
     return jsonify({"suggestion": reply})
 @app.route("/admin_dashboard")
 def admin_dashboard():
+
     if "role" not in session or session["role"] != "admin":
         return redirect("/login")
 
     conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
-    # ===== SYSTEM OVERVIEW =====
+    # ============================
+    # 📊 SYSTEM COUNTS
+    # ============================
+
     cursor.execute("SELECT COUNT(*) FROM doctors")
     total_doctors = cursor.fetchone()[0]
 
@@ -943,42 +978,64 @@ def admin_dashboard():
     cursor.execute("SELECT COUNT(*) FROM appointments")
     total_appointments = cursor.fetchone()[0]
 
+    # Risk counts
     cursor.execute("SELECT COUNT(*) FROM patients WHERE risk_level='High'")
     high_risk_cases = cursor.fetchone()[0]
 
+    cursor.execute("SELECT COUNT(*) FROM patients WHERE risk_level='Medium'")
+    medium_risk_cases = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM patients WHERE risk_level='Low'")
+    low_risk_cases = cursor.fetchone()[0]
+
+    # Departments count
     cursor.execute("SELECT COUNT(DISTINCT specialization) FROM doctors")
     departments_count = cursor.fetchone()[0]
 
-    cursor.execute("SELECT COUNT(*) FROM predictions WHERE date = DATE('now')")
+    # Today's AI predictions
+    cursor.execute("""
+        SELECT COUNT(*) FROM predictions 
+        WHERE DATE(date) = DATE('now')
+    """)
     ai_predictions_today = cursor.fetchone()[0]
 
-    # ===== DOCTOR TABLE =====
+    # ============================
+    # 👨‍⚕️ DOCTOR TABLE
+    # ============================
     cursor.execute("""
         SELECT id, name, hospital, specialization, status
         FROM doctors
+        ORDER BY id DESC
     """)
     doctors = cursor.fetchall()
 
-    # ===== PATIENT TABLE =====
+    # ============================
+    # 🧑‍🤝‍🧑 PATIENT TABLE
+    # ============================
     cursor.execute("""
         SELECT patient_id, symptoms, risk_level, assigned_doctor
         FROM patients
+        ORDER BY id DESC
     """)
     patients = cursor.fetchall()
 
-    # ===== RISK DISTRIBUTION =====
-    cursor.execute("""
-        SELECT risk_level, COUNT(*)
-        FROM patients
-        GROUP BY risk_level
-    """)
-    risk_distribution = dict(cursor.fetchall())
+    # ============================
+    # 📈 RISK DISTRIBUTION (SAFE)
+    # ============================
+    risk_distribution = {
+        "High": high_risk_cases,
+        "Medium": medium_risk_cases,
+        "Low": low_risk_cases
+    }
 
-    # ===== URGENT CASES =====
+    # ============================
+    # 🚨 URGENT CASES
+    # ============================
     cursor.execute("""
         SELECT patient_id, symptoms
         FROM patients
         WHERE risk_level='High'
+        ORDER BY id DESC
         LIMIT 5
     """)
     urgent_cases = cursor.fetchall()
@@ -991,6 +1048,8 @@ def admin_dashboard():
         total_patients=total_patients,
         total_appointments=total_appointments,
         high_risk_cases=high_risk_cases,
+        medium_risk_cases=medium_risk_cases,
+        low_risk_cases=low_risk_cases,
         departments_count=departments_count,
         ai_predictions_today=ai_predictions_today,
         doctors=doctors,
@@ -1340,12 +1399,13 @@ def book_appointment():
     if "role" not in session or session["role"] != "patient":
         return redirect("/login")
 
-    hospital_id = request.form["hospital_id"]
+    # 🔥 Convert to INTEGER
+    hospital_id = int(request.form["hospital_id"])
     appointment_date = request.form["date"]
     patient_id = session.get("user_id")
 
     if not patient_id:
-        return redirect("/login")  # keep consistent
+        return redirect("/login")
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
