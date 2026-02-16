@@ -19,7 +19,7 @@ from dotenv import load_dotenv
 load_dotenv()
 client = Client(api_key=os.getenv("GOOGLE_API_KEY"))
 app = Flask(__name__)
-app.secret_key = os.getenv("APP_SECRET_KEY")
+app.secret_key = os.getenv("SECRET_KEY", "dev-secret-key")
 oauth = OAuth(app)
 google = oauth.register(
     name='google',
