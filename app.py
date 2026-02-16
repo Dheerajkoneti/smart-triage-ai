@@ -216,28 +216,32 @@ def authorize():
     conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM users WHERE email = ?", (email,))
-    existing_user = cursor.fetchone()
+    cursor.execute("SELECT id FROM users WHERE email = ?", (email,))
+    user_row = cursor.fetchone()
 
-    if not existing_user:
+    if not user_row:
         cursor.execute("""
             INSERT INTO users (name, email, password, role)
             VALUES (?, ?, ?, ?)
         """, (name, email, "GOOGLE_AUTH", role))
         conn.commit()
 
+        cursor.execute("SELECT id FROM users WHERE email = ?", (email,))
+        user_row = cursor.fetchone()
+
+    user_id = user_row[0]   # ✅ ALWAYS defined now
+
     conn.close()
 
     # Store in session
+    session["user_id"] = user_id
     session["user"] = email
     session["name"] = name
     session["role"] = role
-
     if role == "doctor":
         return redirect("/doctor_dashboard")
     else:
         return redirect("/patient_dashboard")
-
 @app.route("/login/google")
 def google_login():
     return google.authorize_redirect(
@@ -1269,7 +1273,10 @@ def book_appointment():
 
     hospital_id = request.form["hospital_id"]
     appointment_date = request.form["date"]
-    patient_id = session["user_id"]   # keep consistent
+    patient_id = session.get("user_id")
+
+    if not patient_id:
+        return redirect("/login")  # keep consistent
 
     conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
