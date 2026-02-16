@@ -16,6 +16,7 @@ from flask import jsonify
 from authlib.integrations.flask_client import OAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
+DB_PATH = "/tmp/database.db"
 load_dotenv()
 client = Client(api_key=os.getenv("GOOGLE_API_KEY"))
 app = Flask(__name__)
@@ -42,22 +43,91 @@ def roles_required(allowed_roles):
         return wrapper
     return decorator
 import math
+def init_db():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
 
-def calculate_distance(lat1, lon1, lat2, lon2):
-    R = 6371  # Earth radius in KM
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        email TEXT UNIQUE,
+        password TEXT,
+        role TEXT,
+        is_active INTEGER DEFAULT 1
+    )
+    """)
 
-    dlat = math.radians(lat2 - lat1)
-    dlon = math.radians(lon2 - lon1)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS appointments (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        patient_id INTEGER,
+        hospital_id TEXT,
+        date TEXT,
+        status TEXT
+    )
+    """)
 
-    a = math.sin(dlat / 2) ** 2 + \
-        math.cos(math.radians(lat1)) * \
-        math.cos(math.radians(lat2)) * \
-        math.sin(dlon / 2) ** 2
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS patients (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        patient_id TEXT,
+        age INTEGER,
+        gender TEXT,
+        symptoms TEXT,
+        bp REAL,
+        hr REAL,
+        temp REAL,
+        risk_level TEXT,
+        department TEXT,
+        contact_status TEXT,
+        assigned_doctor INTEGER,
+        doctor_status TEXT,
+        user_email TEXT
+    )
+    """)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS doctors (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        hospital TEXT,
+        specialization TEXT,
+        status TEXT DEFAULT 'Active'
+    )
+    """)
 
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS logs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        message TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
 
-    return round(R * c, 2)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS hospitals (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        department TEXT,
+        latitude REAL,
+        longitude REAL,
+        emergency_available TEXT,
+        icu_beds INTEGER
+    )
+    """)
 
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS predictions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        patient_id TEXT,
+        date DATE DEFAULT CURRENT_DATE
+    )
+    """)
+
+
+    conn.commit()
+    conn.close()
+init_db()
 # =========================================
 # LOAD MODEL SAFELY
 # =========================================
@@ -213,7 +283,7 @@ def authorize():
         role = "patient"
 
     # Save to DB if not exists
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("SELECT id FROM users WHERE email = ?", (email,))
@@ -315,7 +385,7 @@ def predict():
         doctor_id = auto_assign_doctor(department)
 
         # 4️⃣ Save to DATABASE (NOT CSV)
-        conn = sqlite3.connect("database.db")
+        conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
         user_email = session.get("user")
@@ -385,7 +455,7 @@ def predict():
         print("AI Prediction Error:", e)
         return f"Processing error: {str(e)}"
 def auto_assign_doctor(department):
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -613,7 +683,7 @@ def login():
         email = request.form["email"]
         password = request.form["password"]
 
-        conn = sqlite3.connect("database.db")
+        conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM users WHERE email = ?", (email,))
         user = cursor.fetchone()
@@ -648,7 +718,7 @@ def patient_dashboard():
     user_email = session.get("user")
     user_id = session.get("user_id")   # ✅ VERY IMPORTANT
 
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     # 🔹 Get user name
@@ -741,7 +811,7 @@ def find_nearby_hospitals():
     user_lat = float(user_lat)
     user_lon = float(user_lon)
 
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     # 🔥 Fetch hospital dataset
@@ -802,7 +872,7 @@ def update_patient_status(pid):
 
     new_status = request.form.get("status")
 
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -821,7 +891,7 @@ def ai_suggestion(patient_id):
     if session.get("role") != "doctor":
         return jsonify({"error": "Unauthorized"}), 403
 
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -860,7 +930,7 @@ def admin_dashboard():
     if "role" not in session or session["role"] != "admin":
         return redirect("/login")
 
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     # ===== SYSTEM OVERVIEW =====
@@ -934,7 +1004,7 @@ def view_report(patient_id):
     if "role" not in session or session["role"] != "patient":
         return redirect("/login")
 
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -967,7 +1037,7 @@ def add_doctor():
         hospital = request.form["hospital"]
         specialization = request.form["specialization"]
 
-        conn = sqlite3.connect("database.db")
+        conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
         cursor.execute("""
@@ -989,7 +1059,7 @@ def doctor_dashboard():
 
     doctor_id = session.get("user_id")
 
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
@@ -1038,7 +1108,7 @@ def manage_roles():
     if "role" not in session or session["role"] != "admin":
         return redirect("/login")
 
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("SELECT id, name, role FROM users")
@@ -1057,7 +1127,7 @@ def view_logs():
     if "role" not in session or session["role"] != "admin":
         return redirect("/login")
 
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM logs ORDER BY created_at DESC LIMIT 50")
@@ -1076,7 +1146,7 @@ def disable_user_page():
     if "role" not in session or session["role"] != "admin":
         return redirect("/login")
 
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("SELECT id, name, role, is_active FROM users")
@@ -1097,7 +1167,7 @@ def retrain_model():
 @app.route("/edit_doctor/<int:doctor_id>", methods=["GET", "POST"])
 def edit_doctor(doctor_id):
 
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     if request.method == "POST":
@@ -1129,7 +1199,7 @@ def edit_doctor(doctor_id):
 @app.route("/delete_doctor/<int:doctor_id>")
 def delete_doctor(doctor_id):
 
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("DELETE FROM doctors WHERE id = ?", (doctor_id,))
@@ -1142,7 +1212,7 @@ def delete_doctor(doctor_id):
 @app.route("/reassign/<patient_id>", methods=["GET", "POST"])
 def reassign_patient(patient_id):
 
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     if request.method == "POST":
@@ -1171,7 +1241,7 @@ def reassign_patient(patient_id):
     )
 @app.route('/admin/edit_privileges/<int:user_id>', methods=['GET', 'POST'])
 def edit_privileges(user_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     if request.method == 'POST':
@@ -1205,7 +1275,7 @@ def upload_dataset():
 @app.route("/admin/disable_user/<int:user_id>")
 def disable_user(user_id):
 
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("UPDATE users SET is_active = 0 WHERE id = ?", (user_id,))
@@ -1215,7 +1285,7 @@ def disable_user(user_id):
     return redirect("/admin/disable_user")
 @app.route("/fix_users_table")
 def fix_users_table():
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     try:
@@ -1231,7 +1301,6 @@ def logout():
     session.clear()
     return redirect("/login")
 @app.route("/register", methods=["GET", "POST"])
-@app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         name = request.form.get("name")  # ✅ FIXED
@@ -1245,7 +1314,7 @@ def register():
 
         hashed_password = generate_password_hash(password)
 
-        conn = sqlite3.connect("database.db")
+        conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
         try:
@@ -1278,7 +1347,7 @@ def book_appointment():
     if not patient_id:
         return redirect("/login")  # keep consistent
 
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
