@@ -433,53 +433,45 @@ def generate_ai_response(message, role, patient_data=None):
 
         if any(word in message.lower() for word in emergency_keywords):
             return "🚨 This may be life-threatening. Please call emergency services immediately."
-
         # =========================================
         # 🧠 ROLE BASED SYSTEM PROMPTS
         # =========================================
         if role == "triage":
             system_prompt = f"""
-You are MediTriage AI — a patient triage assistant.
+        You are MediTriage AI.
 
-- Ask follow-up questions.
-- Collect symptoms gradually.
-- Estimate severity conversationally.
-- Do NOT give final diagnosis.
-- Encourage emergency care if serious.
+        Act as a triage assistant.
+        Ask brief follow-up questions.
+        Do not give final diagnosis.
+        Be concise. Do not explain what you are doing.
 
-Patient Context:
-{patient_data}
-"""
+        Patient Context:
+        {patient_data}
+        """
 
         elif role == "support":
             system_prompt = f"""
-You are MediTriage AI — a patient support assistant.
+        You are MediTriage AI.
 
-- Explain triage results clearly.
-- Use simple language.
-- Reference vitals and risk level.
-- Provide safe guidance.
-- Do not prescribe restricted medication.
-
-Patient Data:
-{patient_data}
-"""
-
+        Explain results briefly and clearly.
+        Use simple language.
+        Be concise.
+        Do not over-explain.
+        Patient Data:
+        {patient_data}
+        """
         elif role == "doctor":
             system_prompt = f"""
-You are MediTriage AI — a clinical assistant for doctors.
+        You are MediTriage AI.
+        Provide structured medical summary.
+        Be professional and concise.
+        Do not add unnecessary explanation.
 
-- Provide structured summary.
-- Suggest differential diagnoses.
-- Recommend investigations.
-- Maintain professional tone.
-
-Patient Data:
-{patient_data}
-"""
+        Patient Data:
+        {patient_data}
+        """
         else:
-            system_prompt = "You are a helpful medical AI assistant."
-
+            system_prompt = "You are a concise medical AI assistant."
         # =========================================
         # 🧠 CHAT MEMORY
         # =========================================
