@@ -1,1203 +1,1892 @@
 [
-  {
-    "id": 1,
-    "name": "Rainbow Children Hospital Branch 1",
-    "location": "Hyderabad, Kukatpally",
-    "distance_km": 6.6,
-    "departments": [
-      "Gastroenterology",
-      "ICU",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 10,
-      "General": 60,
-      "Emergency": 4
+    {
+        "id": 1,
+        "name": "Hyderabad Care Hospital Branch 1",
+        "location": "Hyderabad, India",
+        "latitude": 17.435648,
+        "longitude": 78.416916,
+        "distance_km": 5.57,
+        "departments": [
+            "Neurology",
+            "General Medicine",
+            "Emergency",
+            "ICU"
+        ],
+        "beds": {
+            "ICU": 25,
+            "General": 54,
+            "Emergency": 40
+        },
+        "icu": 25,
+        "general": 54,
+        "emergency": 40,
+        "specialists": [
+            "Gastroenterologist",
+            "Orthopedic Surgeon",
+            "General Physician"
+        ]
     },
-    "specialists": [
-      "Neurologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 2,
-    "name": "Yashoda Hospital Branch 2",
-    "location": "Hyderabad, Gachibowli",
-    "distance_km": 7.7,
-    "departments": [
-      "ICU",
-      "Orthopedics",
-      "General"
-    ],
-    "beds": {
-      "ICU": 11,
-      "General": 40,
-      "Emergency": 12
+    {
+        "id": 2,
+        "name": "Hyderabad Care Hospital Branch 2",
+        "location": "Hyderabad, India",
+        "latitude": 17.455677,
+        "longitude": 78.541227,
+        "distance_km": 6.25,
+        "departments": [
+            "Orthopedics",
+            "Pediatrics",
+            "Gastroenterology",
+            "Cardiology"
+        ],
+        "beds": {
+            "ICU": 13,
+            "General": 65,
+            "Emergency": 14
+        },
+        "icu": 13,
+        "general": 65,
+        "emergency": 14,
+        "specialists": [
+            "Neurologist",
+            "General Physician",
+            "Orthopedic Surgeon"
+        ]
     },
-    "specialists": [
-      "Neurologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 3,
-    "name": "Sunshine Hospital Branch 3",
-    "location": "Hyderabad, Hitech City",
-    "distance_km": 4.4,
-    "departments": [
-      "ICU",
-      "Orthopedics",
-      "General"
-    ],
-    "beds": {
-      "ICU": 12,
-      "General": 23,
-      "Emergency": 6
+    {
+        "id": 3,
+        "name": "Hyderabad Care Hospital Branch 3",
+        "location": "Hyderabad, India",
+        "latitude": 17.36252,
+        "longitude": 78.473519,
+        "distance_km": 12.98,
+        "departments": [
+            "Gastroenterology",
+            "Emergency",
+            "Cardiology",
+            "Orthopedics"
+        ],
+        "beds": {
+            "ICU": 11,
+            "General": 41,
+            "Emergency": 9
+        },
+        "icu": 11,
+        "general": 41,
+        "emergency": 9,
+        "specialists": [
+            "Pediatrician",
+            "General Physician",
+            "Orthopedic Surgeon"
+        ]
     },
-    "specialists": [
-      "Transplant Surgeon",
-      "Critical Care Specialist"
-    ]
-  },
-  {
-    "id": 4,
-    "name": "Yashoda Hospital Branch 4",
-    "location": "Hyderabad, Secunderabad",
-    "distance_km": 4.3,
-    "departments": [
-      "ICU",
-      "Orthopedics",
-      "General"
-    ],
-    "beds": {
-      "ICU": 5,
-      "General": 14,
-      "Emergency": 3
+    {
+        "id": 4,
+        "name": "Hyderabad Care Hospital Branch 4",
+        "location": "Hyderabad, India",
+        "latitude": 17.439941,
+        "longitude": 78.447386,
+        "distance_km": 7.44,
+        "departments": [
+            "Orthopedics",
+            "ICU",
+            "Pediatrics",
+            "Cardiology"
+        ],
+        "beds": {
+            "ICU": 15,
+            "General": 78,
+            "Emergency": 6
+        },
+        "icu": 15,
+        "general": 78,
+        "emergency": 6,
+        "specialists": [
+            "General Physician",
+            "Emergency Specialist",
+            "Gastroenterologist"
+        ]
     },
-    "specialists": [
-      "Pediatrician",
-      "Neonatologist"
-    ]
-  },
-  {
-    "id": 5,
-    "name": "KIMS Hospital Branch 5",
-    "location": "Hyderabad, Paradise",
-    "distance_km": 3.0,
-    "departments": [
-      "Orthopedics",
-      "ICU",
-      "General"
-    ],
-    "beds": {
-      "ICU": 7,
-      "General": 32,
-      "Emergency": 18
+    {
+        "id": 5,
+        "name": "Hyderabad Care Hospital Branch 5",
+        "location": "Hyderabad, India",
+        "latitude": 17.324379,
+        "longitude": 78.540948,
+        "distance_km": 20.6,
+        "departments": [
+            "Orthopedics",
+            "Pediatrics",
+            "General Medicine",
+            "Emergency"
+        ],
+        "beds": {
+            "ICU": 12,
+            "General": 98,
+            "Emergency": 26
+        },
+        "icu": 12,
+        "general": 98,
+        "emergency": 26,
+        "specialists": [
+            "Cardiologist",
+            "General Physician",
+            "Neurologist"
+        ]
     },
-    "specialists": [
-      "Gastroenterologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 6,
-    "name": "Medicover Hospital Branch 6",
-    "location": "Hyderabad, Hitech City",
-    "distance_km": 5.7,
-    "departments": [
-      "Multi Specialty",
-      "ICU",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 9,
-      "General": 32,
-      "Emergency": 7
+    {
+        "id": 6,
+        "name": "Hyderabad Care Hospital Branch 6",
+        "location": "Hyderabad, India",
+        "latitude": 17.368689,
+        "longitude": 78.420049,
+        "distance_km": 2.66,
+        "departments": [
+            "Emergency",
+            "ICU",
+            "Pediatrics",
+            "General Medicine"
+        ],
+        "beds": {
+            "ICU": 24,
+            "General": 79,
+            "Emergency": 27
+        },
+        "icu": 24,
+        "general": 79,
+        "emergency": 27,
+        "specialists": [
+            "Emergency Specialist",
+            "Pediatrician",
+            "General Physician"
+        ]
     },
-    "specialists": [
-      "Gastroenterologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 7,
-    "name": "Yashoda Hospital Branch 7",
-    "location": "Hyderabad, Hitech City",
-    "distance_km": 7.9,
-    "departments": [
-      "Gastroenterology",
-      "ICU",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 5,
-      "General": 17,
-      "Emergency": 20
+    {
+        "id": 7,
+        "name": "Hyderabad Care Hospital Branch 7",
+        "location": "Hyderabad, India",
+        "latitude": 17.356899,
+        "longitude": 78.540917,
+        "distance_km": 8.71,
+        "departments": [
+            "Pediatrics",
+            "ICU",
+            "Neurology",
+            "Gastroenterology"
+        ],
+        "beds": {
+            "ICU": 9,
+            "General": 85,
+            "Emergency": 27
+        },
+        "icu": 9,
+        "general": 85,
+        "emergency": 27,
+        "specialists": [
+            "Gastroenterologist",
+            "Orthopedic Surgeon",
+            "General Physician"
+        ]
     },
-    "specialists": [
-      "Transplant Surgeon",
-      "Critical Care Specialist"
-    ]
-  },
-  {
-    "id": 8,
-    "name": "Continental Hospital Branch 8",
-    "location": "Hyderabad, Hitech City",
-    "distance_km": 13.3,
-    "departments": [
-      "ICU",
-      "Cardiology",
-      "Oncology"
-    ],
-    "beds": {
-      "ICU": 12,
-      "General": 36,
-      "Emergency": 6
+    {
+        "id": 8,
+        "name": "Hyderabad Care Hospital Branch 8",
+        "location": "Hyderabad, India",
+        "latitude": 17.444816,
+        "longitude": 78.497234,
+        "distance_km": 8.6,
+        "departments": [
+            "Orthopedics",
+            "Emergency",
+            "Cardiology",
+            "Gastroenterology"
+        ],
+        "beds": {
+            "ICU": 21,
+            "General": 37,
+            "Emergency": 23
+        },
+        "icu": 21,
+        "general": 37,
+        "emergency": 23,
+        "specialists": [
+            "Pediatrician",
+            "Emergency Specialist",
+            "Gastroenterologist"
+        ]
     },
-    "specialists": [
-      "Orthopedic Surgeon",
-      "General Physician"
-    ]
-  },
-  {
-    "id": 9,
-    "name": "Continental Hospital Branch 9",
-    "location": "Hyderabad, Paradise",
-    "distance_km": 13.2,
-    "departments": [
-      "ICU",
-      "Cardiology",
-      "Oncology"
-    ],
-    "beds": {
-      "ICU": 11,
-      "General": 50,
-      "Emergency": 8
+    {
+        "id": 9,
+        "name": "Hyderabad Care Hospital Branch 9",
+        "location": "Hyderabad, India",
+        "latitude": 17.440174,
+        "longitude": 78.41227,
+        "distance_km": 5.39,
+        "departments": [
+            "Emergency",
+            "ICU",
+            "Gastroenterology",
+            "Neurology"
+        ],
+        "beds": {
+            "ICU": 8,
+            "General": 47,
+            "Emergency": 30
+        },
+        "icu": 8,
+        "general": 47,
+        "emergency": 30,
+        "specialists": [
+            "Emergency Specialist",
+            "General Physician",
+            "Gastroenterologist"
+        ]
     },
-    "specialists": [
-      "Orthopedic Surgeon",
-      "General Physician"
-    ]
-  },
-  {
-    "id": 10,
-    "name": "Yashoda Hospital Branch 10",
-    "location": "Hyderabad, Kukatpally",
-    "distance_km": 6.5,
-    "departments": [
-      "Orthopedics",
-      "ICU",
-      "General"
-    ],
-    "beds": {
-      "ICU": 9,
-      "General": 38,
-      "Emergency": 5
+    {
+        "id": 10,
+        "name": "Hyderabad Care Hospital Branch 10",
+        "location": "Hyderabad, India",
+        "latitude": 17.458736,
+        "longitude": 78.511386,
+        "distance_km": 10.77,
+        "departments": [
+            "Neurology",
+            "Orthopedics",
+            "ICU",
+            "Pediatrics"
+        ],
+        "beds": {
+            "ICU": 13,
+            "General": 54,
+            "Emergency": 40
+        },
+        "icu": 13,
+        "general": 54,
+        "emergency": 40,
+        "specialists": [
+            "Neurologist",
+            "Pediatrician",
+            "Gastroenterologist"
+        ]
     },
-    "specialists": [
-      "Neurologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 11,
-    "name": "Care Hospital Branch 11",
-    "location": "Hyderabad, Nanakramguda",
-    "distance_km": 14.4,
-    "departments": [
-      "Oncology",
-      "ICU"
-    ],
-    "beds": {
-      "ICU": 12,
-      "General": 29,
-      "Emergency": 11
+    {
+        "id": 11,
+        "name": "Bangalore Care Hospital Branch 1",
+        "location": "Bangalore, India",
+        "latitude": 12.99553,
+        "longitude": 77.556553,
+        "distance_km": 6.72,
+        "departments": [
+            "General Medicine",
+            "Gastroenterology",
+            "Pediatrics",
+            "ICU"
+        ],
+        "beds": {
+            "ICU": 6,
+            "General": 144,
+            "Emergency": 32
+        },
+        "icu": 6,
+        "general": 144,
+        "emergency": 32,
+        "specialists": [
+            "General Physician",
+            "Cardiologist",
+            "Emergency Specialist"
+        ]
     },
-    "specialists": [
-      "Pediatrician",
-      "Neonatologist"
-    ]
-  },
-  {
-    "id": 12,
-    "name": "AIG Hospital Branch 12",
-    "location": "Hyderabad, Secunderabad",
-    "distance_km": 10.1,
-    "departments": [
-      "Transplant",
-      "ICU",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 2,
-      "General": 19,
-      "Emergency": 17
+    {
+        "id": 12,
+        "name": "Bangalore Care Hospital Branch 2",
+        "location": "Bangalore, India",
+        "latitude": 12.940067,
+        "longitude": 77.577349,
+        "distance_km": 18.43,
+        "departments": [
+            "Emergency",
+            "Orthopedics",
+            "Gastroenterology",
+            "General Medicine"
+        ],
+        "beds": {
+            "ICU": 25,
+            "General": 37,
+            "Emergency": 25
+        },
+        "icu": 25,
+        "general": 37,
+        "emergency": 25,
+        "specialists": [
+            "Neurologist",
+            "General Physician",
+            "Pediatrician"
+        ]
     },
-    "specialists": [
-      "Cardiologist",
-      "General Physician",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 13,
-    "name": "AIG Hospital Branch 13",
-    "location": "Hyderabad, Banjara Hills",
-    "distance_km": 9.3,
-    "departments": [
-      "Multi Specialty",
-      "ICU",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 3,
-      "General": 54,
-      "Emergency": 9
+    {
+        "id": 13,
+        "name": "Bangalore Care Hospital Branch 3",
+        "location": "Bangalore, India",
+        "latitude": 13.010395,
+        "longitude": 77.633203,
+        "distance_km": 22.6,
+        "departments": [
+            "Orthopedics",
+            "Emergency",
+            "Pediatrics",
+            "General Medicine"
+        ],
+        "beds": {
+            "ICU": 22,
+            "General": 145,
+            "Emergency": 24
+        },
+        "icu": 22,
+        "general": 145,
+        "emergency": 24,
+        "specialists": [
+            "Pediatrician",
+            "Gastroenterologist",
+            "General Physician"
+        ]
     },
-    "specialists": [
-      "Gastroenterologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 14,
-    "name": "Sunshine Hospital Branch 14",
-    "location": "Hyderabad, Banjara Hills",
-    "distance_km": 10.6,
-    "departments": [
-      "Gastroenterology",
-      "ICU",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 7,
-      "General": 46,
-      "Emergency": 5
+    {
+        "id": 14,
+        "name": "Bangalore Care Hospital Branch 4",
+        "location": "Bangalore, India",
+        "latitude": 12.964289,
+        "longitude": 77.574215,
+        "distance_km": 19.83,
+        "departments": [
+            "ICU",
+            "Pediatrics",
+            "Orthopedics",
+            "Gastroenterology"
+        ],
+        "beds": {
+            "ICU": 21,
+            "General": 67,
+            "Emergency": 38
+        },
+        "icu": 21,
+        "general": 67,
+        "emergency": 38,
+        "specialists": [
+            "Gastroenterologist",
+            "General Physician",
+            "Cardiologist"
+        ]
     },
-    "specialists": [
-      "Oncologist",
-      "Critical Care Specialist"
-    ]
-  },
-  {
-    "id": 15,
-    "name": "Prathima Hospital Branch 15",
-    "location": "Hyderabad, Begumpet",
-    "distance_km": 7.0,
-    "departments": [
-      "Oncology",
-      "ICU"
-    ],
-    "beds": {
-      "ICU": 3,
-      "General": 14,
-      "Emergency": 7
+    {
+        "id": 15,
+        "name": "Bangalore Care Hospital Branch 5",
+        "location": "Bangalore, India",
+        "latitude": 12.994027,
+        "longitude": 77.602625,
+        "distance_km": 19.27,
+        "departments": [
+            "Neurology",
+            "ICU",
+            "Orthopedics",
+            "Cardiology"
+        ],
+        "beds": {
+            "ICU": 7,
+            "General": 148,
+            "Emergency": 14
+        },
+        "icu": 7,
+        "general": 148,
+        "emergency": 14,
+        "specialists": [
+            "Orthopedic Surgeon",
+            "Pediatrician",
+            "Emergency Specialist"
+        ]
     },
-    "specialists": [
-      "Cardiologist",
-      "General Physician",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 16,
-    "name": "Medicover Hospital Branch 16",
-    "location": "Hyderabad, Hitech City",
-    "distance_km": 2.7,
-    "departments": [
-      "ICU",
-      "Neurology",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 7,
-      "General": 48,
-      "Emergency": 9
+    {
+        "id": 16,
+        "name": "Bangalore Care Hospital Branch 6",
+        "location": "Bangalore, India",
+        "latitude": 12.900564,
+        "longitude": 77.607678,
+        "distance_km": 8.54,
+        "departments": [
+            "Emergency",
+            "Cardiology",
+            "ICU",
+            "Neurology"
+        ],
+        "beds": {
+            "ICU": 6,
+            "General": 66,
+            "Emergency": 11
+        },
+        "icu": 6,
+        "general": 66,
+        "emergency": 11,
+        "specialists": [
+            "Emergency Specialist",
+            "Gastroenterologist",
+            "General Physician"
+        ]
     },
-    "specialists": [
-      "Pediatrician",
-      "Neonatologist"
-    ]
-  },
-  {
-    "id": 17,
-    "name": "Yashoda Hospital Branch 17",
-    "location": "Hyderabad, Jubilee Hills",
-    "distance_km": 9.4,
-    "departments": [
-      "Gastroenterology",
-      "ICU",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 11,
-      "General": 28,
-      "Emergency": 20
+    {
+        "id": 17,
+        "name": "Bangalore Care Hospital Branch 7",
+        "location": "Bangalore, India",
+        "latitude": 12.970936,
+        "longitude": 77.529121,
+        "distance_km": 11.62,
+        "departments": [
+            "Pediatrics",
+            "Gastroenterology",
+            "Orthopedics",
+            "ICU"
+        ],
+        "beds": {
+            "ICU": 8,
+            "General": 119,
+            "Emergency": 10
+        },
+        "icu": 8,
+        "general": 119,
+        "emergency": 10,
+        "specialists": [
+            "Pediatrician",
+            "Orthopedic Surgeon",
+            "General Physician"
+        ]
     },
-    "specialists": [
-      "Gastroenterologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 18,
-    "name": "Continental Hospital Branch 18",
-    "location": "Hyderabad, Hitech City",
-    "distance_km": 6.6,
-    "departments": [
-      "ICU",
-      "Cardiology",
-      "Oncology"
-    ],
-    "beds": {
-      "ICU": 2,
-      "General": 42,
-      "Emergency": 13
+    {
+        "id": 18,
+        "name": "Bangalore Care Hospital Branch 8",
+        "location": "Bangalore, India",
+        "latitude": 12.940263,
+        "longitude": 77.643122,
+        "distance_km": 23.77,
+        "departments": [
+            "Emergency",
+            "Neurology",
+            "Cardiology",
+            "ICU"
+        ],
+        "beds": {
+            "ICU": 7,
+            "General": 43,
+            "Emergency": 12
+        },
+        "icu": 7,
+        "general": 43,
+        "emergency": 12,
+        "specialists": [
+            "Pediatrician",
+            "General Physician",
+            "Gastroenterologist"
+        ]
     },
-    "specialists": [
-      "Transplant Surgeon",
-      "Critical Care Specialist"
-    ]
-  },
-  {
-    "id": 19,
-    "name": "Medicover Hospital Branch 19",
-    "location": "Hyderabad, Kukatpally",
-    "distance_km": 8.6,
-    "departments": [
-      "ICU",
-      "Emergency",
-      "Cardiology",
-      "General"
-    ],
-    "beds": {
-      "ICU": 3,
-      "General": 34,
-      "Emergency": 4
+    {
+        "id": 19,
+        "name": "Bangalore Care Hospital Branch 9",
+        "location": "Bangalore, India",
+        "latitude": 12.932668,
+        "longitude": 77.598218,
+        "distance_km": 6.33,
+        "departments": [
+            "General Medicine",
+            "Emergency",
+            "Gastroenterology",
+            "Pediatrics"
+        ],
+        "beds": {
+            "ICU": 9,
+            "General": 82,
+            "Emergency": 29
+        },
+        "icu": 9,
+        "general": 82,
+        "emergency": 29,
+        "specialists": [
+            "Pediatrician",
+            "Emergency Specialist",
+            "Gastroenterologist"
+        ]
     },
-    "specialists": [
-      "Gastroenterologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 20,
-    "name": "Care Hospital Branch 20",
-    "location": "Hyderabad, Lakdikapul",
-    "distance_km": 11.9,
-    "departments": [
-      "Orthopedics",
-      "ICU",
-      "General"
-    ],
-    "beds": {
-      "ICU": 9,
-      "General": 17,
-      "Emergency": 7
+    {
+        "id": 20,
+        "name": "Bangalore Care Hospital Branch 10",
+        "location": "Bangalore, India",
+        "latitude": 12.906927,
+        "longitude": 77.551079,
+        "distance_km": 20.99,
+        "departments": [
+            "Pediatrics",
+            "Cardiology",
+            "Neurology",
+            "Orthopedics"
+        ],
+        "beds": {
+            "ICU": 23,
+            "General": 78,
+            "Emergency": 15
+        },
+        "icu": 23,
+        "general": 78,
+        "emergency": 15,
+        "specialists": [
+            "General Physician",
+            "Emergency Specialist",
+            "Gastroenterologist"
+        ]
     },
-    "specialists": [
-      "Gastroenterologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 21,
-    "name": "Omega Cancer Hospital Branch 21",
-    "location": "Hyderabad, Nanakramguda",
-    "distance_km": 14.8,
-    "departments": [
-      "ICU",
-      "Cardiology",
-      "Oncology"
-    ],
-    "beds": {
-      "ICU": 12,
-      "General": 41,
-      "Emergency": 18
+    {
+        "id": 21,
+        "name": "Chennai Care Hospital Branch 1",
+        "location": "Chennai, India",
+        "latitude": 13.117625,
+        "longitude": 80.272901,
+        "distance_km": 2.27,
+        "departments": [
+            "Emergency",
+            "Orthopedics",
+            "Pediatrics",
+            "General Medicine"
+        ],
+        "beds": {
+            "ICU": 16,
+            "General": 55,
+            "Emergency": 14
+        },
+        "icu": 16,
+        "general": 55,
+        "emergency": 14,
+        "specialists": [
+            "General Physician",
+            "Gastroenterologist",
+            "Orthopedic Surgeon"
+        ]
     },
-    "specialists": [
-      "Gastroenterologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 22,
-    "name": "Omega Cancer Hospital Branch 22",
-    "location": "Hyderabad, Begumpet",
-    "distance_km": 4.1,
-    "departments": [
-      "ICU",
-      "Neurology",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 6,
-      "General": 37,
-      "Emergency": 9
+    {
+        "id": 22,
+        "name": "Chennai Care Hospital Branch 2",
+        "location": "Chennai, India",
+        "latitude": 13.100447,
+        "longitude": 80.194283,
+        "distance_km": 14.0,
+        "departments": [
+            "Cardiology",
+            "ICU",
+            "Pediatrics",
+            "Emergency"
+        ],
+        "beds": {
+            "ICU": 6,
+            "General": 62,
+            "Emergency": 28
+        },
+        "icu": 6,
+        "general": 62,
+        "emergency": 28,
+        "specialists": [
+            "Emergency Specialist",
+            "Gastroenterologist",
+            "Neurologist"
+        ]
     },
-    "specialists": [
-      "Gastroenterologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 23,
-    "name": "Omega Cancer Hospital Branch 23",
-    "location": "Hyderabad, Secunderabad",
-    "distance_km": 9.8,
-    "departments": [
-      "ICU",
-      "Neurology",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 7,
-      "General": 28,
-      "Emergency": 20
+    {
+        "id": 23,
+        "name": "Chennai Care Hospital Branch 3",
+        "location": "Chennai, India",
+        "latitude": 13.077575,
+        "longitude": 80.24472,
+        "distance_km": 23.49,
+        "departments": [
+            "Emergency",
+            "Gastroenterology",
+            "Pediatrics",
+            "Neurology"
+        ],
+        "beds": {
+            "ICU": 14,
+            "General": 38,
+            "Emergency": 9
+        },
+        "icu": 14,
+        "general": 38,
+        "emergency": 9,
+        "specialists": [
+            "Pediatrician",
+            "General Physician",
+            "Cardiologist"
+        ]
     },
-    "specialists": [
-      "Neurologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 24,
-    "name": "Global Hospital Branch 24",
-    "location": "Hyderabad, Kukatpally",
-    "distance_km": 12.4,
-    "departments": [
-      "Pediatrics",
-      "ICU"
-    ],
-    "beds": {
-      "ICU": 5,
-      "General": 32,
-      "Emergency": 18
+    {
+        "id": 24,
+        "name": "Chennai Care Hospital Branch 4",
+        "location": "Chennai, India",
+        "latitude": 13.160216,
+        "longitude": 80.313238,
+        "distance_km": 17.88,
+        "departments": [
+            "Gastroenterology",
+            "Orthopedics",
+            "Emergency",
+            "ICU"
+        ],
+        "beds": {
+            "ICU": 18,
+            "General": 119,
+            "Emergency": 38
+        },
+        "icu": 18,
+        "general": 119,
+        "emergency": 38,
+        "specialists": [
+            "Cardiologist",
+            "General Physician",
+            "Emergency Specialist"
+        ]
     },
-    "specialists": [
-      "Oncologist",
-      "Critical Care Specialist"
-    ]
-  },
-  {
-    "id": 25,
-    "name": "Sunshine Hospital Branch 25",
-    "location": "Hyderabad, Kukatpally",
-    "distance_km": 9.7,
-    "departments": [
-      "ICU",
-      "Cardiology",
-      "Oncology"
-    ],
-    "beds": {
-      "ICU": 11,
-      "General": 12,
-      "Emergency": 20
+    {
+        "id": 25,
+        "name": "Chennai Care Hospital Branch 5",
+        "location": "Chennai, India",
+        "latitude": 13.082361,
+        "longitude": 80.282897,
+        "distance_km": 12.92,
+        "departments": [
+            "Pediatrics",
+            "Emergency",
+            "General Medicine",
+            "Orthopedics"
+        ],
+        "beds": {
+            "ICU": 21,
+            "General": 148,
+            "Emergency": 26
+        },
+        "icu": 21,
+        "general": 148,
+        "emergency": 26,
+        "specialists": [
+            "Neurologist",
+            "Pediatrician",
+            "Emergency Specialist"
+        ]
     },
-    "specialists": [
-      "Neurologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 26,
-    "name": "Care Hospital Branch 26",
-    "location": "Hyderabad, Begumpet",
-    "distance_km": 14.8,
-    "departments": [
-      "ICU",
-      "Cardiology",
-      "Oncology"
-    ],
-    "beds": {
-      "ICU": 6,
-      "General": 43,
-      "Emergency": 12
+    {
+        "id": 26,
+        "name": "Chennai Care Hospital Branch 6",
+        "location": "Chennai, India",
+        "latitude": 13.129787,
+        "longitude": 80.205349,
+        "distance_km": 9.94,
+        "departments": [
+            "ICU",
+            "Neurology",
+            "Cardiology",
+            "Pediatrics"
+        ],
+        "beds": {
+            "ICU": 21,
+            "General": 120,
+            "Emergency": 31
+        },
+        "icu": 21,
+        "general": 120,
+        "emergency": 31,
+        "specialists": [
+            "General Physician",
+            "Gastroenterologist",
+            "Orthopedic Surgeon"
+        ]
     },
-    "specialists": [
-      "Oncologist",
-      "Critical Care Specialist"
-    ]
-  },
-  {
-    "id": 27,
-    "name": "Osmania General Hospital Branch 27",
-    "location": "Hyderabad, Jubilee Hills",
-    "distance_km": 14.5,
-    "departments": [
-      "Multi Specialty",
-      "ICU",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 7,
-      "General": 41,
-      "Emergency": 15
+    {
+        "id": 27,
+        "name": "Chennai Care Hospital Branch 7",
+        "location": "Chennai, India",
+        "latitude": 13.102478,
+        "longitude": 80.221457,
+        "distance_km": 5.88,
+        "departments": [
+            "Gastroenterology",
+            "Pediatrics",
+            "Orthopedics",
+            "ICU"
+        ],
+        "beds": {
+            "ICU": 10,
+            "General": 109,
+            "Emergency": 37
+        },
+        "icu": 10,
+        "general": 109,
+        "emergency": 37,
+        "specialists": [
+            "Emergency Specialist",
+            "Cardiologist",
+            "Gastroenterologist"
+        ]
     },
-    "specialists": [
-      "Gastroenterologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 28,
-    "name": "Yashoda Hospital Branch 28",
-    "location": "Hyderabad, Jubilee Hills",
-    "distance_km": 12.7,
-    "departments": [
-      "Oncology",
-      "ICU"
-    ],
-    "beds": {
-      "ICU": 6,
-      "General": 31,
-      "Emergency": 16
+    {
+        "id": 28,
+        "name": "Chennai Care Hospital Branch 8",
+        "location": "Chennai, India",
+        "latitude": 13.061943,
+        "longitude": 80.342431,
+        "distance_km": 1.86,
+        "departments": [
+            "Emergency",
+            "ICU",
+            "Orthopedics",
+            "Pediatrics"
+        ],
+        "beds": {
+            "ICU": 21,
+            "General": 140,
+            "Emergency": 15
+        },
+        "icu": 21,
+        "general": 140,
+        "emergency": 15,
+        "specialists": [
+            "Neurologist",
+            "Gastroenterologist",
+            "Emergency Specialist"
+        ]
     },
-    "specialists": [
-      "Orthopedic Surgeon",
-      "General Physician"
-    ]
-  },
-  {
-    "id": 29,
-    "name": "Apollo Hospital Branch 29",
-    "location": "Hyderabad, Kukatpally",
-    "distance_km": 4.8,
-    "departments": [
-      "Orthopedics",
-      "ICU",
-      "General"
-    ],
-    "beds": {
-      "ICU": 7,
-      "General": 33,
-      "Emergency": 8
+    {
+        "id": 29,
+        "name": "Chennai Care Hospital Branch 9",
+        "location": "Chennai, India",
+        "latitude": 13.102742,
+        "longitude": 80.282135,
+        "distance_km": 11.69,
+        "departments": [
+            "Pediatrics",
+            "Cardiology",
+            "ICU",
+            "Neurology"
+        ],
+        "beds": {
+            "ICU": 16,
+            "General": 100,
+            "Emergency": 10
+        },
+        "icu": 16,
+        "general": 100,
+        "emergency": 10,
+        "specialists": [
+            "Cardiologist",
+            "Neurologist",
+            "Gastroenterologist"
+        ]
     },
-    "specialists": [
-      "Gastroenterologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 30,
-    "name": "Continental Hospital Branch 30",
-    "location": "Hyderabad, Paradise",
-    "distance_km": 12.8,
-    "departments": [
-      "Orthopedics",
-      "ICU",
-      "General"
-    ],
-    "beds": {
-      "ICU": 3,
-      "General": 16,
-      "Emergency": 5
+    {
+        "id": 30,
+        "name": "Chennai Care Hospital Branch 10",
+        "location": "Chennai, India",
+        "latitude": 13.129389,
+        "longitude": 80.227199,
+        "distance_km": 18.9,
+        "departments": [
+            "Emergency",
+            "General Medicine",
+            "Gastroenterology",
+            "Neurology"
+        ],
+        "beds": {
+            "ICU": 24,
+            "General": 87,
+            "Emergency": 33
+        },
+        "icu": 24,
+        "general": 87,
+        "emergency": 33,
+        "specialists": [
+            "Gastroenterologist",
+            "Cardiologist",
+            "Orthopedic Surgeon"
+        ]
     },
-    "specialists": [
-      "Oncologist",
-      "Critical Care Specialist"
-    ]
-  },
-  {
-    "id": 31,
-    "name": "Omega Cancer Hospital Branch 31",
-    "location": "Hyderabad, Hitech City",
-    "distance_km": 4.6,
-    "departments": [
-      "Orthopedics",
-      "ICU",
-      "General"
-    ],
-    "beds": {
-      "ICU": 3,
-      "General": 38,
-      "Emergency": 10
+    {
+        "id": 31,
+        "name": "Mumbai Care Hospital Branch 1",
+        "location": "Mumbai, India",
+        "latitude": 19.074263,
+        "longitude": 72.91095,
+        "distance_km": 8.33,
+        "departments": [
+            "Neurology",
+            "General Medicine",
+            "Pediatrics",
+            "ICU"
+        ],
+        "beds": {
+            "ICU": 15,
+            "General": 34,
+            "Emergency": 24
+        },
+        "icu": 15,
+        "general": 34,
+        "emergency": 24,
+        "specialists": [
+            "Neurologist",
+            "Pediatrician",
+            "Orthopedic Surgeon"
+        ]
     },
-    "specialists": [
-      "Orthopedic Surgeon",
-      "General Physician"
-    ]
-  },
-  {
-    "id": 32,
-    "name": "KIMS Hospital Branch 32",
-    "location": "Hyderabad, Paradise",
-    "distance_km": 13.6,
-    "departments": [
-      "ICU",
-      "Orthopedics",
-      "General"
-    ],
-    "beds": {
-      "ICU": 11,
-      "General": 13,
-      "Emergency": 17
+    {
+        "id": 32,
+        "name": "Mumbai Care Hospital Branch 2",
+        "location": "Mumbai, India",
+        "latitude": 19.058796,
+        "longitude": 72.858964,
+        "distance_km": 6.69,
+        "departments": [
+            "ICU",
+            "General Medicine",
+            "Emergency",
+            "Pediatrics"
+        ],
+        "beds": {
+            "ICU": 25,
+            "General": 104,
+            "Emergency": 15
+        },
+        "icu": 25,
+        "general": 104,
+        "emergency": 15,
+        "specialists": [
+            "General Physician",
+            "Neurologist",
+            "Pediatrician"
+        ]
     },
-    "specialists": [
-      "Orthopedic Surgeon",
-      "General Physician"
-    ]
-  },
-  {
-    "id": 33,
-    "name": "KIMS Hospital Branch 33",
-    "location": "Hyderabad, Lakdikapul",
-    "distance_km": 10.0,
-    "departments": [
-      "Transplant",
-      "ICU",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 3,
-      "General": 32,
-      "Emergency": 11
+    {
+        "id": 33,
+        "name": "Mumbai Care Hospital Branch 3",
+        "location": "Mumbai, India",
+        "latitude": 19.105023,
+        "longitude": 72.821987,
+        "distance_km": 4.25,
+        "departments": [
+            "ICU",
+            "Orthopedics",
+            "Gastroenterology",
+            "Neurology"
+        ],
+        "beds": {
+            "ICU": 22,
+            "General": 77,
+            "Emergency": 35
+        },
+        "icu": 22,
+        "general": 77,
+        "emergency": 35,
+        "specialists": [
+            "Emergency Specialist",
+            "Gastroenterologist",
+            "Neurologist"
+        ]
     },
-    "specialists": [
-      "Orthopedic Surgeon",
-      "General Physician"
-    ]
-  },
-  {
-    "id": 34,
-    "name": "Medicover Hospital Branch 34",
-    "location": "Hyderabad, Lakdikapul",
-    "distance_km": 3.3,
-    "departments": [
-      "ICU",
-      "Cardiology",
-      "Oncology"
-    ],
-    "beds": {
-      "ICU": 4,
-      "General": 22,
-      "Emergency": 6
+    {
+        "id": 34,
+        "name": "Mumbai Care Hospital Branch 4",
+        "location": "Mumbai, India",
+        "latitude": 19.112168,
+        "longitude": 72.876802,
+        "distance_km": 18.11,
+        "departments": [
+            "Gastroenterology",
+            "Neurology",
+            "General Medicine",
+            "ICU"
+        ],
+        "beds": {
+            "ICU": 12,
+            "General": 132,
+            "Emergency": 27
+        },
+        "icu": 12,
+        "general": 132,
+        "emergency": 27,
+        "specialists": [
+            "Emergency Specialist",
+            "Pediatrician",
+            "Orthopedic Surgeon"
+        ]
     },
-    "specialists": [
-      "Transplant Surgeon",
-      "Critical Care Specialist"
-    ]
-  },
-  {
-    "id": 35,
-    "name": "AIG Hospital Branch 35",
-    "location": "Hyderabad, Lakdikapul",
-    "distance_km": 7.4,
-    "departments": [
-      "Gastroenterology",
-      "ICU",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 5,
-      "General": 30,
-      "Emergency": 15
+    {
+        "id": 35,
+        "name": "Mumbai Care Hospital Branch 5",
+        "location": "Mumbai, India",
+        "latitude": 19.085404,
+        "longitude": 72.899817,
+        "distance_km": 15.13,
+        "departments": [
+            "Pediatrics",
+            "Emergency",
+            "Gastroenterology",
+            "Orthopedics"
+        ],
+        "beds": {
+            "ICU": 8,
+            "General": 67,
+            "Emergency": 24
+        },
+        "icu": 8,
+        "general": 67,
+        "emergency": 24,
+        "specialists": [
+            "Cardiologist",
+            "Emergency Specialist",
+            "Orthopedic Surgeon"
+        ]
     },
-    "specialists": [
-      "Pediatrician",
-      "Neonatologist"
-    ]
-  },
-  {
-    "id": 36,
-    "name": "Rainbow Children Hospital Branch 36",
-    "location": "Hyderabad, Lakdikapul",
-    "distance_km": 5.0,
-    "departments": [
-      "Oncology",
-      "ICU"
-    ],
-    "beds": {
-      "ICU": 12,
-      "General": 35,
-      "Emergency": 7
+    {
+        "id": 36,
+        "name": "Mumbai Care Hospital Branch 6",
+        "location": "Mumbai, India",
+        "latitude": 18.99883,
+        "longitude": 72.899939,
+        "distance_km": 21.32,
+        "departments": [
+            "General Medicine",
+            "Gastroenterology",
+            "Pediatrics",
+            "Neurology"
+        ],
+        "beds": {
+            "ICU": 11,
+            "General": 85,
+            "Emergency": 18
+        },
+        "icu": 11,
+        "general": 85,
+        "emergency": 18,
+        "specialists": [
+            "Gastroenterologist",
+            "General Physician",
+            "Neurologist"
+        ]
     },
-    "specialists": [
-      "Gastroenterologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 37,
-    "name": "Sunshine Hospital Branch 37",
-    "location": "Hyderabad, Lakdikapul",
-    "distance_km": 2.6,
-    "departments": [
-      "Oncology",
-      "ICU"
-    ],
-    "beds": {
-      "ICU": 9,
-      "General": 51,
-      "Emergency": 19
+    {
+        "id": 37,
+        "name": "Mumbai Care Hospital Branch 7",
+        "location": "Mumbai, India",
+        "latitude": 19.0453,
+        "longitude": 72.899916,
+        "distance_km": 10.53,
+        "departments": [
+            "Neurology",
+            "Emergency",
+            "Pediatrics",
+            "Cardiology"
+        ],
+        "beds": {
+            "ICU": 10,
+            "General": 100,
+            "Emergency": 33
+        },
+        "icu": 10,
+        "general": 100,
+        "emergency": 33,
+        "specialists": [
+            "Orthopedic Surgeon",
+            "Pediatrician",
+            "General Physician"
+        ]
     },
-    "specialists": [
-      "Neurologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 38,
-    "name": "Rainbow Children Hospital Branch 38",
-    "location": "Hyderabad, Hitech City",
-    "distance_km": 3.4,
-    "departments": [
-      "ICU",
-      "Cardiology",
-      "Oncology"
-    ],
-    "beds": {
-      "ICU": 5,
-      "General": 35,
-      "Emergency": 13
+    {
+        "id": 38,
+        "name": "Mumbai Care Hospital Branch 8",
+        "location": "Mumbai, India",
+        "latitude": 19.081085,
+        "longitude": 72.867375,
+        "distance_km": 16.4,
+        "departments": [
+            "Gastroenterology",
+            "Orthopedics",
+            "Neurology",
+            "General Medicine"
+        ],
+        "beds": {
+            "ICU": 16,
+            "General": 37,
+            "Emergency": 28
+        },
+        "icu": 16,
+        "general": 37,
+        "emergency": 28,
+        "specialists": [
+            "Pediatrician",
+            "General Physician",
+            "Emergency Specialist"
+        ]
     },
-    "specialists": [
-      "Gastroenterologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 39,
-    "name": "Global Hospital Branch 39",
-    "location": "Hyderabad, Hitech City",
-    "distance_km": 4.3,
-    "departments": [
-      "ICU",
-      "Emergency",
-      "Cardiology",
-      "General"
-    ],
-    "beds": {
-      "ICU": 5,
-      "General": 49,
-      "Emergency": 13
+    {
+        "id": 39,
+        "name": "Mumbai Care Hospital Branch 9",
+        "location": "Mumbai, India",
+        "latitude": 19.085013,
+        "longitude": 72.956603,
+        "distance_km": 9.9,
+        "departments": [
+            "Pediatrics",
+            "Neurology",
+            "ICU",
+            "Orthopedics"
+        ],
+        "beds": {
+            "ICU": 17,
+            "General": 108,
+            "Emergency": 13
+        },
+        "icu": 17,
+        "general": 108,
+        "emergency": 13,
+        "specialists": [
+            "General Physician",
+            "Gastroenterologist",
+            "Pediatrician"
+        ]
     },
-    "specialists": [
-      "Orthopedic Surgeon",
-      "General Physician"
-    ]
-  },
-  {
-    "id": 40,
-    "name": "Care Hospital Branch 40",
-    "location": "Hyderabad, Banjara Hills",
-    "distance_km": 13.9,
-    "departments": [
-      "ICU",
-      "Neurology",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 6,
-      "General": 18,
-      "Emergency": 3
+    {
+        "id": 40,
+        "name": "Mumbai Care Hospital Branch 10",
+        "location": "Mumbai, India",
+        "latitude": 19.115784,
+        "longitude": 72.947997,
+        "distance_km": 7.73,
+        "departments": [
+            "ICU",
+            "Cardiology",
+            "General Medicine",
+            "Pediatrics"
+        ],
+        "beds": {
+            "ICU": 11,
+            "General": 144,
+            "Emergency": 23
+        },
+        "icu": 11,
+        "general": 144,
+        "emergency": 23,
+        "specialists": [
+            "Orthopedic Surgeon",
+            "Gastroenterologist",
+            "Cardiologist"
+        ]
     },
-    "specialists": [
-      "Cardiologist",
-      "General Physician",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 41,
-    "name": "Osmania General Hospital Branch 41",
-    "location": "Hyderabad, Paradise",
-    "distance_km": 12.6,
-    "departments": [
-      "Pediatrics",
-      "ICU"
-    ],
-    "beds": {
-      "ICU": 2,
-      "General": 55,
-      "Emergency": 16
+    {
+        "id": 41,
+        "name": "Delhi Care Hospital Branch 1",
+        "location": "Delhi, India",
+        "latitude": 28.68927,
+        "longitude": 77.030279,
+        "distance_km": 7.01,
+        "departments": [
+            "Gastroenterology",
+            "ICU",
+            "Emergency",
+            "General Medicine"
+        ],
+        "beds": {
+            "ICU": 24,
+            "General": 69,
+            "Emergency": 31
+        },
+        "icu": 24,
+        "general": 69,
+        "emergency": 31,
+        "specialists": [
+            "Emergency Specialist",
+            "Pediatrician",
+            "Gastroenterologist"
+        ]
     },
-    "specialists": [
-      "Orthopedic Surgeon",
-      "General Physician"
-    ]
-  },
-  {
-    "id": 42,
-    "name": "Continental Hospital Branch 42",
-    "location": "Hyderabad, Lakdikapul",
-    "distance_km": 9.8,
-    "departments": [
-      "ICU",
-      "Cardiology",
-      "Oncology"
-    ],
-    "beds": {
-      "ICU": 7,
-      "General": 25,
-      "Emergency": 20
+    {
+        "id": 42,
+        "name": "Delhi Care Hospital Branch 2",
+        "location": "Delhi, India",
+        "latitude": 28.689854,
+        "longitude": 77.118135,
+        "distance_km": 1.31,
+        "departments": [
+            "Gastroenterology",
+            "General Medicine",
+            "Orthopedics",
+            "Emergency"
+        ],
+        "beds": {
+            "ICU": 16,
+            "General": 114,
+            "Emergency": 22
+        },
+        "icu": 16,
+        "general": 114,
+        "emergency": 22,
+        "specialists": [
+            "Cardiologist",
+            "Emergency Specialist",
+            "Gastroenterologist"
+        ]
     },
-    "specialists": [
-      "Neurologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 43,
-    "name": "Osmania General Hospital Branch 43",
-    "location": "Hyderabad, Jubilee Hills",
-    "distance_km": 5.4,
-    "departments": [
-      "Orthopedics",
-      "ICU",
-      "General"
-    ],
-    "beds": {
-      "ICU": 5,
-      "General": 60,
-      "Emergency": 19
+    {
+        "id": 43,
+        "name": "Delhi Care Hospital Branch 3",
+        "location": "Delhi, India",
+        "latitude": 28.707123,
+        "longitude": 77.131046,
+        "distance_km": 22.85,
+        "departments": [
+            "Neurology",
+            "Pediatrics",
+            "ICU",
+            "Gastroenterology"
+        ],
+        "beds": {
+            "ICU": 19,
+            "General": 85,
+            "Emergency": 32
+        },
+        "icu": 19,
+        "general": 85,
+        "emergency": 32,
+        "specialists": [
+            "Neurologist",
+            "Cardiologist",
+            "Orthopedic Surgeon"
+        ]
     },
-    "specialists": [
-      "Gastroenterologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 44,
-    "name": "Osmania General Hospital Branch 44",
-    "location": "Hyderabad, Gachibowli",
-    "distance_km": 7.7,
-    "departments": [
-      "Orthopedics",
-      "ICU",
-      "General"
-    ],
-    "beds": {
-      "ICU": 7,
-      "General": 19,
-      "Emergency": 11
+    {
+        "id": 44,
+        "name": "Delhi Care Hospital Branch 4",
+        "location": "Delhi, India",
+        "latitude": 28.732367,
+        "longitude": 77.124348,
+        "distance_km": 15.04,
+        "departments": [
+            "Cardiology",
+            "Orthopedics",
+            "ICU",
+            "Neurology"
+        ],
+        "beds": {
+            "ICU": 19,
+            "General": 91,
+            "Emergency": 18
+        },
+        "icu": 19,
+        "general": 91,
+        "emergency": 18,
+        "specialists": [
+            "Emergency Specialist",
+            "Pediatrician",
+            "General Physician"
+        ]
     },
-    "specialists": [
-      "Orthopedic Surgeon",
-      "General Physician"
-    ]
-  },
-  {
-    "id": 45,
-    "name": "Medicover Hospital Branch 45",
-    "location": "Hyderabad, Lakdikapul",
-    "distance_km": 10.4,
-    "departments": [
-      "ICU",
-      "Emergency",
-      "Cardiology",
-      "General"
-    ],
-    "beds": {
-      "ICU": 3,
-      "General": 17,
-      "Emergency": 7
+    {
+        "id": 45,
+        "name": "Delhi Care Hospital Branch 5",
+        "location": "Delhi, India",
+        "latitude": 28.685398,
+        "longitude": 77.037238,
+        "distance_km": 1.96,
+        "departments": [
+            "Cardiology",
+            "Gastroenterology",
+            "Emergency",
+            "General Medicine"
+        ],
+        "beds": {
+            "ICU": 15,
+            "General": 105,
+            "Emergency": 27
+        },
+        "icu": 15,
+        "general": 105,
+        "emergency": 27,
+        "specialists": [
+            "Gastroenterologist",
+            "Pediatrician",
+            "Cardiologist"
+        ]
     },
-    "specialists": [
-      "Neurologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 46,
-    "name": "Rainbow Children Hospital Branch 46",
-    "location": "Hyderabad, Kukatpally",
-    "distance_km": 7.8,
-    "departments": [
-      "Transplant",
-      "ICU",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 9,
-      "General": 60,
-      "Emergency": 16
+    {
+        "id": 46,
+        "name": "Delhi Care Hospital Branch 6",
+        "location": "Delhi, India",
+        "latitude": 28.767981,
+        "longitude": 77.076183,
+        "distance_km": 7.71,
+        "departments": [
+            "General Medicine",
+            "ICU",
+            "Emergency",
+            "Orthopedics"
+        ],
+        "beds": {
+            "ICU": 11,
+            "General": 62,
+            "Emergency": 38
+        },
+        "icu": 11,
+        "general": 62,
+        "emergency": 38,
+        "specialists": [
+            "Emergency Specialist",
+            "Cardiologist",
+            "Pediatrician"
+        ]
     },
-    "specialists": [
-      "Oncologist",
-      "Critical Care Specialist"
-    ]
-  },
-  {
-    "id": 47,
-    "name": "Osmania General Hospital Branch 47",
-    "location": "Hyderabad, Hitech City",
-    "distance_km": 2.5,
-    "departments": [
-      "Orthopedics",
-      "ICU",
-      "General"
-    ],
-    "beds": {
-      "ICU": 9,
-      "General": 22,
-      "Emergency": 11
+    {
+        "id": 47,
+        "name": "Delhi Care Hospital Branch 7",
+        "location": "Delhi, India",
+        "latitude": 28.695465,
+        "longitude": 77.175859,
+        "distance_km": 10.76,
+        "departments": [
+            "Pediatrics",
+            "Neurology",
+            "Orthopedics",
+            "ICU"
+        ],
+        "beds": {
+            "ICU": 21,
+            "General": 42,
+            "Emergency": 20
+        },
+        "icu": 21,
+        "general": 42,
+        "emergency": 20,
+        "specialists": [
+            "Emergency Specialist",
+            "General Physician",
+            "Neurologist"
+        ]
     },
-    "specialists": [
-      "Neurologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 48,
-    "name": "Omega Cancer Hospital Branch 48",
-    "location": "Hyderabad, Banjara Hills",
-    "distance_km": 6.0,
-    "departments": [
-      "Multi Specialty",
-      "ICU",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 5,
-      "General": 35,
-      "Emergency": 3
+    {
+        "id": 48,
+        "name": "Delhi Care Hospital Branch 8",
+        "location": "Delhi, India",
+        "latitude": 28.65655,
+        "longitude": 77.13056,
+        "distance_km": 20.3,
+        "departments": [
+            "Orthopedics",
+            "ICU",
+            "Emergency",
+            "Gastroenterology"
+        ],
+        "beds": {
+            "ICU": 20,
+            "General": 75,
+            "Emergency": 25
+        },
+        "icu": 20,
+        "general": 75,
+        "emergency": 25,
+        "specialists": [
+            "General Physician",
+            "Pediatrician",
+            "Orthopedic Surgeon"
+        ]
     },
-    "specialists": [
-      "Pediatrician",
-      "Neonatologist"
-    ]
-  },
-  {
-    "id": 49,
-    "name": "Medicover Hospital Branch 49",
-    "location": "Hyderabad, Nanakramguda",
-    "distance_km": 6.5,
-    "departments": [
-      "ICU",
-      "Cardiology",
-      "Oncology"
-    ],
-    "beds": {
-      "ICU": 10,
-      "General": 23,
-      "Emergency": 8
+    {
+        "id": 49,
+        "name": "Delhi Care Hospital Branch 9",
+        "location": "Delhi, India",
+        "latitude": 28.69486,
+        "longitude": 77.148368,
+        "distance_km": 1.11,
+        "departments": [
+            "Pediatrics",
+            "Orthopedics",
+            "Cardiology",
+            "General Medicine"
+        ],
+        "beds": {
+            "ICU": 18,
+            "General": 150,
+            "Emergency": 9
+        },
+        "icu": 18,
+        "general": 150,
+        "emergency": 9,
+        "specialists": [
+            "Emergency Specialist",
+            "General Physician",
+            "Pediatrician"
+        ]
     },
-    "specialists": [
-      "Orthopedic Surgeon",
-      "General Physician"
-    ]
-  },
-  {
-    "id": 50,
-    "name": "Yashoda Hospital Branch 50",
-    "location": "Hyderabad, Paradise",
-    "distance_km": 10.6,
-    "departments": [
-      "Oncology",
-      "ICU"
-    ],
-    "beds": {
-      "ICU": 10,
-      "General": 60,
-      "Emergency": 16
+    {
+        "id": 50,
+        "name": "Delhi Care Hospital Branch 10",
+        "location": "Delhi, India",
+        "latitude": 28.783525,
+        "longitude": 77.109602,
+        "distance_km": 24.59,
+        "departments": [
+            "General Medicine",
+            "Gastroenterology",
+            "Pediatrics",
+            "Orthopedics"
+        ],
+        "beds": {
+            "ICU": 24,
+            "General": 125,
+            "Emergency": 12
+        },
+        "icu": 24,
+        "general": 125,
+        "emergency": 12,
+        "specialists": [
+            "Gastroenterologist",
+            "Emergency Specialist",
+            "Pediatrician"
+        ]
     },
-    "specialists": [
-      "Transplant Surgeon",
-      "Critical Care Specialist"
-    ]
-  },
-  {
-    "id": 51,
-    "name": "Prathima Hospital Branch 51",
-    "location": "Hyderabad, Lakdikapul",
-    "distance_km": 2.8,
-    "departments": [
-      "ICU",
-      "Neurology",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 2,
-      "General": 24,
-      "Emergency": 9
+    {
+        "id": 51,
+        "name": "Pune Care Hospital Branch 1",
+        "location": "Pune, India",
+        "latitude": 18.580017,
+        "longitude": 73.779813,
+        "distance_km": 21.61,
+        "departments": [
+            "Emergency",
+            "Cardiology",
+            "ICU",
+            "Orthopedics"
+        ],
+        "beds": {
+            "ICU": 19,
+            "General": 130,
+            "Emergency": 7
+        },
+        "icu": 19,
+        "general": 130,
+        "emergency": 7,
+        "specialists": [
+            "Orthopedic Surgeon",
+            "Cardiologist",
+            "Pediatrician"
+        ]
     },
-    "specialists": [
-      "Orthopedic Surgeon",
-      "General Physician"
-    ]
-  },
-  {
-    "id": 52,
-    "name": "Continental Hospital Branch 52",
-    "location": "Hyderabad, Paradise",
-    "distance_km": 4.8,
-    "departments": [
-      "Pediatrics",
-      "ICU"
-    ],
-    "beds": {
-      "ICU": 7,
-      "General": 43,
-      "Emergency": 8
+    {
+        "id": 52,
+        "name": "Pune Care Hospital Branch 2",
+        "location": "Pune, India",
+        "latitude": 18.499395,
+        "longitude": 73.803023,
+        "distance_km": 13.04,
+        "departments": [
+            "Gastroenterology",
+            "Pediatrics",
+            "ICU",
+            "Cardiology"
+        ],
+        "beds": {
+            "ICU": 8,
+            "General": 94,
+            "Emergency": 37
+        },
+        "icu": 8,
+        "general": 94,
+        "emergency": 37,
+        "specialists": [
+            "Emergency Specialist",
+            "General Physician",
+            "Orthopedic Surgeon"
+        ]
     },
-    "specialists": [
-      "Cardiologist",
-      "General Physician",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 53,
-    "name": "Apollo Hospital Branch 53",
-    "location": "Hyderabad, Kukatpally",
-    "distance_km": 3.6,
-    "departments": [
-      "Orthopedics",
-      "ICU",
-      "General"
-    ],
-    "beds": {
-      "ICU": 5,
-      "General": 56,
-      "Emergency": 20
+    {
+        "id": 53,
+        "name": "Pune Care Hospital Branch 3",
+        "location": "Pune, India",
+        "latitude": 18.59208,
+        "longitude": 73.864172,
+        "distance_km": 10.66,
+        "departments": [
+            "General Medicine",
+            "Neurology",
+            "ICU",
+            "Pediatrics"
+        ],
+        "beds": {
+            "ICU": 11,
+            "General": 140,
+            "Emergency": 31
+        },
+        "icu": 11,
+        "general": 140,
+        "emergency": 31,
+        "specialists": [
+            "Pediatrician",
+            "Cardiologist",
+            "Neurologist"
+        ]
     },
-    "specialists": [
-      "Oncologist",
-      "Critical Care Specialist"
-    ]
-  },
-  {
-    "id": 54,
-    "name": "Care Hospital Branch 54",
-    "location": "Hyderabad, Gachibowli",
-    "distance_km": 6.5,
-    "departments": [
-      "Pediatrics",
-      "ICU"
-    ],
-    "beds": {
-      "ICU": 3,
-      "General": 17,
-      "Emergency": 15
+    {
+        "id": 54,
+        "name": "Pune Care Hospital Branch 4",
+        "location": "Pune, India",
+        "latitude": 18.55807,
+        "longitude": 73.780848,
+        "distance_km": 1.18,
+        "departments": [
+            "ICU",
+            "Orthopedics",
+            "Pediatrics",
+            "Neurology"
+        ],
+        "beds": {
+            "ICU": 14,
+            "General": 84,
+            "Emergency": 40
+        },
+        "icu": 14,
+        "general": 84,
+        "emergency": 40,
+        "specialists": [
+            "Gastroenterologist",
+            "Emergency Specialist",
+            "Neurologist"
+        ]
     },
-    "specialists": [
-      "Transplant Surgeon",
-      "Critical Care Specialist"
-    ]
-  },
-  {
-    "id": 55,
-    "name": "Care Hospital Branch 55",
-    "location": "Hyderabad, Nanakramguda",
-    "distance_km": 10.3,
-    "departments": [
-      "ICU",
-      "Neurology",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 7,
-      "General": 54,
-      "Emergency": 12
+    {
+        "id": 55,
+        "name": "Pune Care Hospital Branch 5",
+        "location": "Pune, India",
+        "latitude": 18.515731,
+        "longitude": 73.780429,
+        "distance_km": 15.01,
+        "departments": [
+            "Gastroenterology",
+            "ICU",
+            "General Medicine",
+            "Cardiology"
+        ],
+        "beds": {
+            "ICU": 13,
+            "General": 149,
+            "Emergency": 5
+        },
+        "icu": 13,
+        "general": 149,
+        "emergency": 5,
+        "specialists": [
+            "Cardiologist",
+            "Emergency Specialist",
+            "Pediatrician"
+        ]
     },
-    "specialists": [
-      "Pediatrician",
-      "Neonatologist"
-    ]
-  },
-  {
-    "id": 56,
-    "name": "Gandhi Hospital Branch 56",
-    "location": "Hyderabad, Begumpet",
-    "distance_km": 13.4,
-    "departments": [
-      "ICU",
-      "Emergency",
-      "Cardiology",
-      "General"
-    ],
-    "beds": {
-      "ICU": 8,
-      "General": 42,
-      "Emergency": 12
+    {
+        "id": 56,
+        "name": "Pune Care Hospital Branch 6",
+        "location": "Pune, India",
+        "latitude": 18.449917,
+        "longitude": 73.77899,
+        "distance_km": 13.93,
+        "departments": [
+            "Cardiology",
+            "Emergency",
+            "General Medicine",
+            "Orthopedics"
+        ],
+        "beds": {
+            "ICU": 20,
+            "General": 133,
+            "Emergency": 11
+        },
+        "icu": 20,
+        "general": 133,
+        "emergency": 11,
+        "specialists": [
+            "Neurologist",
+            "Cardiologist",
+            "General Physician"
+        ]
     },
-    "specialists": [
-      "Cardiologist",
-      "General Physician",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 57,
-    "name": "Global Hospital Branch 57",
-    "location": "Hyderabad, Nanakramguda",
-    "distance_km": 10.6,
-    "departments": [
-      "Transplant",
-      "ICU",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 3,
-      "General": 49,
-      "Emergency": 12
+    {
+        "id": 57,
+        "name": "Pune Care Hospital Branch 7",
+        "location": "Pune, India",
+        "latitude": 18.595584,
+        "longitude": 73.818235,
+        "distance_km": 3.39,
+        "departments": [
+            "Orthopedics",
+            "Cardiology",
+            "ICU",
+            "General Medicine"
+        ],
+        "beds": {
+            "ICU": 23,
+            "General": 114,
+            "Emergency": 10
+        },
+        "icu": 23,
+        "general": 114,
+        "emergency": 10,
+        "specialists": [
+            "Cardiologist",
+            "Pediatrician",
+            "Orthopedic Surgeon"
+        ]
     },
-    "specialists": [
-      "Neurologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 58,
-    "name": "Omega Cancer Hospital Branch 58",
-    "location": "Hyderabad, Paradise",
-    "distance_km": 4.6,
-    "departments": [
-      "Orthopedics",
-      "ICU",
-      "General"
-    ],
-    "beds": {
-      "ICU": 3,
-      "General": 55,
-      "Emergency": 20
+    {
+        "id": 58,
+        "name": "Pune Care Hospital Branch 8",
+        "location": "Pune, India",
+        "latitude": 18.491393,
+        "longitude": 73.781846,
+        "distance_km": 1.39,
+        "departments": [
+            "Pediatrics",
+            "Neurology",
+            "Orthopedics",
+            "General Medicine"
+        ],
+        "beds": {
+            "ICU": 20,
+            "General": 55,
+            "Emergency": 9
+        },
+        "icu": 20,
+        "general": 55,
+        "emergency": 9,
+        "specialists": [
+            "Pediatrician",
+            "Cardiologist",
+            "Orthopedic Surgeon"
+        ]
     },
-    "specialists": [
-      "Neurologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 59,
-    "name": "Prathima Hospital Branch 59",
-    "location": "Hyderabad, Lakdikapul",
-    "distance_km": 9.1,
-    "departments": [
-      "ICU",
-      "Emergency",
-      "Cardiology",
-      "General"
-    ],
-    "beds": {
-      "ICU": 4,
-      "General": 15,
-      "Emergency": 13
+    {
+        "id": 59,
+        "name": "Pune Care Hospital Branch 9",
+        "location": "Pune, India",
+        "latitude": 18.564255,
+        "longitude": 73.902383,
+        "distance_km": 20.16,
+        "departments": [
+            "Orthopedics",
+            "General Medicine",
+            "Neurology",
+            "Pediatrics"
+        ],
+        "beds": {
+            "ICU": 13,
+            "General": 131,
+            "Emergency": 7
+        },
+        "icu": 13,
+        "general": 131,
+        "emergency": 7,
+        "specialists": [
+            "Gastroenterologist",
+            "Orthopedic Surgeon",
+            "Pediatrician"
+        ]
     },
-    "specialists": [
-      "Gastroenterologist",
-      "Emergency Specialist"
-    ]
-  },
-  {
-    "id": 60,
-    "name": "Apollo Hospital Branch 60",
-    "location": "Hyderabad, Gachibowli",
-    "distance_km": 2.6,
-    "departments": [
-      "Multi Specialty",
-      "ICU",
-      "Emergency"
-    ],
-    "beds": {
-      "ICU": 8,
-      "General": 48,
-      "Emergency": 8
+    {
+        "id": 60,
+        "name": "Pune Care Hospital Branch 10",
+        "location": "Pune, India",
+        "latitude": 18.503603,
+        "longitude": 73.787831,
+        "distance_km": 1.56,
+        "departments": [
+            "Orthopedics",
+            "Cardiology",
+            "Pediatrics",
+            "Neurology"
+        ],
+        "beds": {
+            "ICU": 21,
+            "General": 76,
+            "Emergency": 30
+        },
+        "icu": 21,
+        "general": 76,
+        "emergency": 30,
+        "specialists": [
+            "General Physician",
+            "Gastroenterologist",
+            "Pediatrician"
+        ]
     },
-    "specialists": [
-      "Cardiologist",
-      "General Physician",
-      "Emergency Specialist"
-    ]
-  }
+    {
+        "id": 61,
+        "name": "Kolkata Care Hospital Branch 1",
+        "location": "Kolkata, India",
+        "latitude": 22.496015,
+        "longitude": 88.433145,
+        "distance_km": 4.07,
+        "departments": [
+            "Pediatrics",
+            "ICU",
+            "Gastroenterology",
+            "General Medicine"
+        ],
+        "beds": {
+            "ICU": 22,
+            "General": 130,
+            "Emergency": 10
+        },
+        "icu": 22,
+        "general": 130,
+        "emergency": 10,
+        "specialists": [
+            "Pediatrician",
+            "Emergency Specialist",
+            "Gastroenterologist"
+        ]
+    },
+    {
+        "id": 62,
+        "name": "Kolkata Care Hospital Branch 2",
+        "location": "Kolkata, India",
+        "latitude": 22.611127,
+        "longitude": 88.300788,
+        "distance_km": 10.23,
+        "departments": [
+            "Emergency",
+            "Pediatrics",
+            "Orthopedics",
+            "Cardiology"
+        ],
+        "beds": {
+            "ICU": 18,
+            "General": 65,
+            "Emergency": 25
+        },
+        "icu": 18,
+        "general": 65,
+        "emergency": 25,
+        "specialists": [
+            "Orthopedic Surgeon",
+            "Gastroenterologist",
+            "Neurologist"
+        ]
+    },
+    {
+        "id": 63,
+        "name": "Kolkata Care Hospital Branch 3",
+        "location": "Kolkata, India",
+        "latitude": 22.651239,
+        "longitude": 88.376014,
+        "distance_km": 4.4,
+        "departments": [
+            "ICU",
+            "General Medicine",
+            "Cardiology",
+            "Pediatrics"
+        ],
+        "beds": {
+            "ICU": 16,
+            "General": 68,
+            "Emergency": 23
+        },
+        "icu": 16,
+        "general": 68,
+        "emergency": 23,
+        "specialists": [
+            "Pediatrician",
+            "Orthopedic Surgeon",
+            "General Physician"
+        ]
+    },
+    {
+        "id": 64,
+        "name": "Kolkata Care Hospital Branch 4",
+        "location": "Kolkata, India",
+        "latitude": 22.570191,
+        "longitude": 88.305444,
+        "distance_km": 17.07,
+        "departments": [
+            "Cardiology",
+            "General Medicine",
+            "Emergency",
+            "Gastroenterology"
+        ],
+        "beds": {
+            "ICU": 14,
+            "General": 92,
+            "Emergency": 28
+        },
+        "icu": 14,
+        "general": 92,
+        "emergency": 28,
+        "specialists": [
+            "General Physician",
+            "Cardiologist",
+            "Orthopedic Surgeon"
+        ]
+    },
+    {
+        "id": 65,
+        "name": "Kolkata Care Hospital Branch 5",
+        "location": "Kolkata, India",
+        "latitude": 22.617201,
+        "longitude": 88.290225,
+        "distance_km": 10.95,
+        "departments": [
+            "Neurology",
+            "Emergency",
+            "Gastroenterology",
+            "General Medicine"
+        ],
+        "beds": {
+            "ICU": 18,
+            "General": 66,
+            "Emergency": 21
+        },
+        "icu": 18,
+        "general": 66,
+        "emergency": 21,
+        "specialists": [
+            "Pediatrician",
+            "Orthopedic Surgeon",
+            "Neurologist"
+        ]
+    },
+    {
+        "id": 66,
+        "name": "Kolkata Care Hospital Branch 6",
+        "location": "Kolkata, India",
+        "latitude": 22.598397,
+        "longitude": 88.370069,
+        "distance_km": 19.6,
+        "departments": [
+            "Cardiology",
+            "Gastroenterology",
+            "General Medicine",
+            "Pediatrics"
+        ],
+        "beds": {
+            "ICU": 8,
+            "General": 67,
+            "Emergency": 33
+        },
+        "icu": 8,
+        "general": 67,
+        "emergency": 33,
+        "specialists": [
+            "Pediatrician",
+            "Cardiologist",
+            "Orthopedic Surgeon"
+        ]
+    },
+    {
+        "id": 67,
+        "name": "Kolkata Care Hospital Branch 7",
+        "location": "Kolkata, India",
+        "latitude": 22.554051,
+        "longitude": 88.421729,
+        "distance_km": 2.6,
+        "departments": [
+            "Pediatrics",
+            "Gastroenterology",
+            "Emergency",
+            "General Medicine"
+        ],
+        "beds": {
+            "ICU": 18,
+            "General": 35,
+            "Emergency": 30
+        },
+        "icu": 18,
+        "general": 35,
+        "emergency": 30,
+        "specialists": [
+            "Gastroenterologist",
+            "Cardiologist",
+            "General Physician"
+        ]
+    },
+    {
+        "id": 68,
+        "name": "Kolkata Care Hospital Branch 8",
+        "location": "Kolkata, India",
+        "latitude": 22.639927,
+        "longitude": 88.36434,
+        "distance_km": 5.4,
+        "departments": [
+            "Cardiology",
+            "Neurology",
+            "Pediatrics",
+            "Gastroenterology"
+        ],
+        "beds": {
+            "ICU": 5,
+            "General": 30,
+            "Emergency": 16
+        },
+        "icu": 5,
+        "general": 30,
+        "emergency": 16,
+        "specialists": [
+            "Cardiologist",
+            "Orthopedic Surgeon",
+            "General Physician"
+        ]
+    },
+    {
+        "id": 69,
+        "name": "Kolkata Care Hospital Branch 9",
+        "location": "Kolkata, India",
+        "latitude": 22.621174,
+        "longitude": 88.31449,
+        "distance_km": 17.84,
+        "departments": [
+            "Emergency",
+            "Pediatrics",
+            "General Medicine",
+            "ICU"
+        ],
+        "beds": {
+            "ICU": 19,
+            "General": 116,
+            "Emergency": 18
+        },
+        "icu": 19,
+        "general": 116,
+        "emergency": 18,
+        "specialists": [
+            "Gastroenterologist",
+            "Neurologist",
+            "Cardiologist"
+        ]
+    },
+    {
+        "id": 70,
+        "name": "Kolkata Care Hospital Branch 10",
+        "location": "Kolkata, India",
+        "latitude": 22.592675,
+        "longitude": 88.395894,
+        "distance_km": 21.15,
+        "departments": [
+            "General Medicine",
+            "Orthopedics",
+            "ICU",
+            "Emergency"
+        ],
+        "beds": {
+            "ICU": 15,
+            "General": 90,
+            "Emergency": 17
+        },
+        "icu": 15,
+        "general": 90,
+        "emergency": 17,
+        "specialists": [
+            "Gastroenterologist",
+            "Neurologist",
+            "Cardiologist"
+        ]
+    }
 ]

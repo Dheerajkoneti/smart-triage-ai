@@ -185,48 +185,53 @@ def calculate_distance(lat1, lon1, lat2, lon2):
     return R * c
 def rank_hospitals(user_lat, user_lng, department_needed, risk_level):
 
-    with open("data/hospitals.json") as f:
+    with open("data/hospitals_multicity_70.json") as f:
         hospitals = json.load(f)
 
     ranked = []
 
     for hospital in hospitals:
 
-        distance = calculate_distance(
-            user_lat, user_lng,
-            hospital["latitude"], hospital["lngitude"]
-        )
+        try:
+            lat = float(hospital["latitude"])
+            lng = float(hospital["longitude"])
 
-        specialist_score = 1 if department_needed in hospital["departments"] else 0
-        icu_available = 1 if hospital["icu_beds"] > 0 else 0
-        emergency_score = 1 if hospital["emergency_ready"] else 0
+            distance = calculate_distance(user_lat, user_lng, lat, lng)
 
-        # 🚨 Emergency Override
-        if risk_level == "High":
-            if not specialist_score or not icu_available:
-                continue  # Skip unsafe hospitals
+            # Department match
+            specialist_score = 1 if department_needed in hospital["departments"] else 0
 
-        score = (
-            (1 / (distance + 1)) * 0.4 +
-            specialist_score * 0.3 +
-            icu_available * 0.2 +
-            emergency_score * 0.1
-        )
+            icu_available = hospital.get("icu", 0)
+            emergency_available = hospital.get("emergency", 0)
 
-        ranked.append({
-            "name": hospital["name"],
-            "distance": round(distance, 2),
-            "icu_beds": hospital["icu_beds"],
-            "emergency_beds": hospital["emergency_beds"],
-            "score": round(score * 100, 2),
-            "lat": hospital["latitude"],
-            "lng": hospital["lngitude"]
-        })
+            # 🚨 Emergency override for High risk
+            if risk_level == "High":
+                if specialist_score == 0 or icu_available == 0:
+                    continue
+
+            # 🎯 Smart weighted score
+            score = (
+                (1 / (distance + 1)) * 40 +
+                specialist_score * 30 +
+                icu_available * 5 +
+                emergency_available * 3
+            )
+
+            ranked.append({
+                "id": hospital["id"],
+                "name": hospital["name"],
+                "location": hospital["location"],
+                "distance_km": round(distance, 2),
+                "icu": icu_available,
+                "emergency": emergency_available,
+                "score": round(score, 2)
+            })
+        except Exception as e:
+            print("Hospital ranking error:", e)
 
     ranked.sort(key=lambda x: x["score"], reverse=True)
 
-    return ranked[:3]
-
+    return ranked[:5]
 # =========================================
 # CORE NAVIGATION ROUTES
 # =========================================
@@ -242,16 +247,48 @@ def triage():
     return render_template("index.html")
 @app.route("/find_hospitals", methods=["POST"])
 def find_hospitals():
-    data = request.json
-    user_lat = float(data["lat"])
-    user_lng = float(data["lng"])
-    department = data["department"]
-    risk_level = data["risk_level"]
+    try:
+        data = request.get_json()
 
-    hospitals = rank_hospitals(user_lat, user_lng, department, risk_level)
+        user_lat = float(data.get("lat"))
+        user_lng = float(data.get("lng"))
+        department = data.get("department")
+        risk_level = data.get("risk_level")
 
-    return jsonify(hospitals)
+        if not department or not risk_level:
+            return jsonify({"error": "Missing department or risk level"}), 400
 
+        hospitals = rank_hospitals(user_lat, user_lng, department, risk_level)
+
+        return jsonify(hospitals)
+
+    except Exception as e:
+        print("Find hospitals error:", e)
+        return jsonify({"error": "Internal server error"}), 500
+@app.route("/auto_book_hospital", methods=["POST"])
+def auto_book_hospital():
+
+    if "role" not in session or session["role"] != "patient":
+        return jsonify({"message": "Unauthorized"}), 403
+
+    data = request.get_json()
+    hospital_id = data.get("hospital_id")
+
+    patient_id = session.get("user_id")
+
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    # Insert appointment
+    cursor.execute("""
+        INSERT INTO appointments (patient_id, hospital_id, date, status)
+        VALUES (?, ?, DATE('now'), ?)
+    """, (patient_id, hospital_id, "Emergency"))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "🚑 Emergency Appointment Booked!"})
 # =========================================
 # UPLOAD DOCUMENT PAGE
 # =========================================
@@ -353,6 +390,38 @@ def dashboard():
     df = pd.read_csv("data/patient_data.csv")
     patients = df.to_dict(orient="records")
     return render_template("triage_dashboard.html", patients=patients)
+@app.route("/notify/<patient_id>")
+def notify_patient(patient_id):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE patients
+        SET contact_status = 'Notified'
+        WHERE patient_id = ?
+    """, (patient_id,))
+
+    conn.commit()
+    conn.close()
+
+    flash("Patient Notified Successfully!", "success")
+    return redirect("/admin_dashboard")
+@app.route("/escalate/<patient_id>")
+def escalate_case(patient_id):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE patients
+        SET doctor_status = 'Escalated'
+        WHERE patient_id = ?
+    """, (patient_id,))
+
+    conn.commit()
+    conn.close()
+
+    flash("Case Escalated!", "warning")
+    return redirect("/admin_dashboard")
 # =========================================
 # PREDICTION & DATA PERSISTENCE
 # =========================================
@@ -827,27 +896,30 @@ def patient_dashboard():
 @app.route("/find_nearby_hospitals")
 def find_nearby_hospitals():
 
-    # 🔒 Must be logged in patient
+    # 🔒 Only patient can access
     if "role" not in session or session["role"] != "patient":
         return redirect("/login")
 
-    # 📍 Get user current location from query params
+    # 📍 Get user location
     user_lat = request.args.get("lat")
     user_lon = request.args.get("lon")
 
     if not user_lat or not user_lon:
         return "Location not provided"
 
-    user_lat = float(user_lat)
-    user_lon = float(user_lon)
+    try:
+        user_lat = float(user_lat)
+        user_lon = float(user_lon)
+    except ValueError:
+        return "Invalid location format"
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     # 🔥 Fetch hospital dataset
     cursor.execute("""
-        SELECT id, name, department, latitude, longitude, 
-               emergency_available, icu_beds
+        SELECT id, name, location, latitude, longitude,
+               emergency, icu, general
         FROM hospitals
     """)
     hospitals = cursor.fetchall()
@@ -855,39 +927,54 @@ def find_nearby_hospitals():
     hospital_list = []
 
     for hospital in hospitals:
-        hospital_id = hospital[0]
-        name = hospital[1]
-        department = hospital[2]
-        lat = float(hospital[3])
-        lon = float(hospital[4])
-        emergency = hospital[5]
-        icu_beds = hospital[6]
+        try:
+            hospital_id = hospital[0]
+            name = hospital[1]
+            location = hospital[2]
+            lat = float(hospital[3])
+            lon = float(hospital[4])
+            emergency_beds = int(hospital[5])
+            icu_beds = int(hospital[6])
+            general_beds = int(hospital[7])
 
-        # 📏 Calculate distance
-        distance = calculate_distance(user_lat, user_lon, lat, lon)
+            # 📏 Distance Calculation
+            distance = calculate_distance(user_lat, user_lon, lat, lon)
 
-        # 🧠 Simple AI Score Logic
-        score = 0
-        score += max(0, 100 - distance) * 0.4  # Distance weight 40%
-        score += (1 if emergency == "Yes" else 0) * 30  # Emergency weight 30%
-        score += (icu_beds * 2)  # ICU weight
+            # 🧠 AI Smart Scoring
+            score = 0
 
-        hospital_list.append({
-            "id": hospital_id,
-            "name": name,
-            "department": department,
-            "distance": distance,
-            "emergency": emergency,
-            "icu_beds": icu_beds,
-            "score": round(score, 2)
-        })
+            # 40% Distance weight
+            score += max(0, 100 - distance) * 0.4  
+
+            # 30% Emergency weight
+            score += emergency_beds * 2  
+
+            # 20% ICU weight
+            score += icu_beds * 3  
+
+            # 10% General beds
+            score += general_beds * 1  
+
+            hospital_list.append({
+                "id": hospital_id,
+                "name": name,
+                "location": location,
+                "distance_km": round(distance, 2),
+                "emergency_beds": emergency_beds,
+                "icu_beds": icu_beds,
+                "general_beds": general_beds,
+                "score": round(score, 2)
+            })
+
+        except Exception as e:
+            print("Hospital processing error:", e)
 
     conn.close()
 
-    # 🔥 Sort by Score (Highest First)
+    # 🔥 Sort by AI Score
     hospital_list.sort(key=lambda x: x["score"], reverse=True)
 
-    # 🎯 Return Top 5 Hospitals
+    # 🎯 Return Top 5
     top_hospitals = hospital_list[:5]
 
     return render_template(

@@ -629,6 +629,12 @@ function displayHospitals(hospitals) {
     let container = document.getElementById("hospital-results");
     container.innerHTML = "";
 
+    if (!hospitals || hospitals.length === 0) {
+        container.innerHTML =
+            "<p style='color:orange;'>No suitable hospitals found.</p>";
+        return;
+    }
+
     hospitals.forEach(h => {
 
         container.innerHTML += `
@@ -640,23 +646,56 @@ function displayHospitals(hospitals) {
             margin-bottom: 15px;
         ">
             <h3>🏥 ${h.name}</h3>
-            <p>📍 ${h.distance} km away</p>
-            <p>🛏 ICU Beds: ${h.icu_beds}</p>
-            <p>⭐ AI Score: ${h.score}%</p>
+            <p>📍 ${h.location}</p>
+            <p>📏 ${h.distance_km} km away</p>
+            <p>🚨 Emergency Beds: ${h.emergency}</p>
+            <p>🛏 ICU Beds: ${h.icu}</p>
+            <p>⭐ AI Score: ${h.score}</p>
+
+            <button onclick="bookEmergency('${h.id}')"
+                style="
+                    margin-top:10px;
+                    background:#00d2ff;
+                    padding:10px 20px;
+                    border-radius:8px;
+                    border:none;
+                    font-weight:bold;
+                    cursor:pointer;">
+                🚑 Book Now
+            </button>
 
             <a target="_blank"
-               href="https://www.google.com/maps/dir/?api=1&destination=${h.lat},${h.lng}"
+               href="https://www.google.com/maps/dir/?api=1&destination=${h.latitude},${h.longitude}"
                style="
-                    background:#00d2ff;
+                    display:inline-block;
+                    margin-top:10px;
+                    margin-left:10px;
+                    background:#fff;
                     padding:10px 20px;
                     border-radius:8px;
                     text-decoration:none;
                     color:#0a192f;
                     font-weight:bold;">
-               🚑 Navigate Now
+               🗺 Navigate
             </a>
         </div>
         `;
+    });
+}
+function bookEmergency(hospitalId) {
+
+    fetch("/auto_book_hospital", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ hospital_id: hospitalId })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+        window.location.href = "/patient_dashboard";
+    })
+    .catch(err => {
+        alert("Booking failed.");
     });
 }
 </script>
