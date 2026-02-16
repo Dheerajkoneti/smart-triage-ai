@@ -194,7 +194,7 @@ def rank_hospitals(user_lat, user_lng, department_needed, risk_level):
 
         distance = calculate_distance(
             user_lat, user_lng,
-            hospital["lat"], hospital["lng"]
+            hospital["latitude"], hospital["lngitude"]
         )
 
         specialist_score = 1 if department_needed in hospital["departments"] else 0
@@ -219,8 +219,8 @@ def rank_hospitals(user_lat, user_lng, department_needed, risk_level):
             "icu_beds": hospital["icu_beds"],
             "emergency_beds": hospital["emergency_beds"],
             "score": round(score * 100, 2),
-            "lat": hospital["lat"],
-            "lng": hospital["lng"]
+            "lat": hospital["latitude"],
+            "lng": hospital["lngitude"]
         })
 
     ranked.sort(key=lambda x: x["score"], reverse=True)
