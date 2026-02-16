@@ -9,8 +9,7 @@
 🌐 Live Application
 🚀 Access Here:
 
-👉 https://smart-triage-ai.onrender.com�
-
+👉https://smart-triage-ai.onrender.com/
 
 📌 Project Overview
 
@@ -160,6 +159,7 @@ Dheeraj Koneti
 AI & Full Stack Developer
 
 Healthcare Innovation Enthusiast
+
 
 
 
