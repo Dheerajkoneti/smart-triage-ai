@@ -9,7 +9,7 @@
 🌐 Live Application
 🚀 Access Here:
 
-👉https://smart-triage-ai.onrender.com/
+👉https://smart-triage-ai-production.up.railway.app
 
 📌 Project Overview
 
@@ -159,6 +159,7 @@ Dheeraj Koneti
 AI & Full Stack Developer
 
 Healthcare Innovation Enthusiast
+
 
 
 
