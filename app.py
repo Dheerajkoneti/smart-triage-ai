@@ -16,10 +16,12 @@ from flask import jsonify
 from authlib.integrations.flask_client import OAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
+from werkzeug.middleware.proxy_fix import ProxyFix
 DB_PATH = "/tmp/database.db"
 load_dotenv()
 client = Client(api_key=os.getenv("GOOGLE_API_KEY"))
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 app.secret_key = os.getenv("SECRET_KEY", "dev-secret-key")
 oauth = OAuth(app)
 google = oauth.register(
