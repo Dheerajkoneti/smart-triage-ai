@@ -5,6 +5,7 @@ pandas
 scikit-learn
 scipy
 joblib
-Authlib
-google-generativeai
+authlib
+google-genai
 python-dotenv
+
